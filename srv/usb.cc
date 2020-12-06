@@ -1,9 +1,22 @@
 #include "usb.h"  // NOLINT(build/include)
 // SetupDiGetInterfaceDeviceDetail所需要的输出长度，定义足够大
 #define INTERFACE_DETAIL_SIZE (1024)
-
-    Napi::Array GetUsbDeviceList(const Napi::CallbackInfo &info)
+#define MAX_DEVICE (10)
+Napi::Array GetUsbDeviceList(const Napi::CallbackInfo &info)
 {
+
+    int i;
+    char* szDevicePath[MAX_DEVICE];        // 设备路径
+  
+    // 分配需要的空间
+    for (i = 0; i < MAX_DEVICE; i++)
+    {
+        szDevicePath[i] = new char[256];
+    }
+    int nDevice;
+    // 取设备路径
+    nDevice = ::GetDevicePath((LPGUID)&GUID_DEVINTERFACE_USB_DEVICE, szDevicePath);
+
     Napi::Env env = info.Env();
     Napi::Array arr = Napi::Array::New(env);
     int count = 1;
@@ -14,6 +27,7 @@
         info.Set(Napi::String::New(env, "manufacturer"), "desc");
         info.Set(Napi::String::New(env, "serialNumber"), "service");
         info.Set(Napi::String::New(env, "devicePath"), "path");
+        info.Set(Napi::String::New(env, "deviceCont"), nDevice);
         arr.Set(Napi::Number::New(env, i), info);
     }
     return arr;
