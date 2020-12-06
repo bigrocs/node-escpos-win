@@ -1,0 +1,25 @@
+{
+  "name": "node-escpos-win",
+  "version": "1.0.0",
+  "description": "a cpp escpos plugin for nodejs and electron",
+  "main": "index.js",
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "windows"
+  ],
+  "author": "bigrocs",
+  "license": "ISC",
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "node-addon-api": "^3.0.2"
+  },
+  "os": [
+    "win32"
+  ]
+}
