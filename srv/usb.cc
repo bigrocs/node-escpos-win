@@ -62,11 +62,11 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
             DWORD nSize = 0;
             if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_FRIENDLYNAME, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
-                device.Set(Napi::String::New(env, "name"), Utf8Encode(buf));
+                device.Set(Napi::String::New(env, "name"), Napi::Symbol::WellKnown(env, buf));
             }
             else if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_DEVICEDESC, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
-                device.Set(Napi::String::New(env, "name"), Utf8Encode(buf));
+                device.Set(Napi::String::New(env, "name"), Napi::Symbol::WellKnown(env, buf));
             }
         }
 
@@ -101,16 +101,22 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
     obj.Set(Napi::String::New(env, "number"), nCount);
     return obj;
 }
-
-char *Utf8Encode(const TCHAR *str)
+string Utf8Encode(const string &str)
 {
-    #ifdef _UNICODE
-        int size = WideCharToMultiByte(CP_UTF8, 0, str, wcslen(str), NULL, 0, NULL, NULL);
-        char *str8 = (char *)malloc(size + 1);
-        WideCharToMultiByte(CP_UTF8, 0, str, wcslen(str), str8, size, NULL, NULL);
-        str8[size] = '\0';
-        return str8;
-    #else
-        return _strdup(str);
-    #endif
+    if (str.empty())
+    {
+        return string();
+    }
+
+    //System default code page to wide character
+    int wstr_size = MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, NULL, 0);
+    wstring wstr_tmp(wstr_size, 0);
+    MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, &wstr_tmp[0], wstr_size);
+
+    //Wide character to Utf8
+    int str_size = WideCharToMultiByte(CP_UTF8, 0, &wstr_tmp[0], (int)wstr_tmp.size(), NULL, 0, NULL, NULL);
+    string str_utf8(str_size, 0);
+    WideCharToMultiByte(CP_UTF8, 0, &wstr_tmp[0], (int)wstr_tmp.size(), &str_utf8[0], str_size, NULL, NULL);
+
+    return str_utf8;
 }
