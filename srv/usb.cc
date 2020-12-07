@@ -62,11 +62,11 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
             DWORD nSize = 0;
             if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_FRIENDLYNAME, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
-                device.Set(Napi::String::New(env, "name"), Napi::Symbol::WellKnown(env, buf));
+                device.Set(Napi::String::New(env, "name"), Napi::String::Utf8Value(env, buf));
             }
             else if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_DEVICEDESC, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
-                device.Set(Napi::String::New(env, "name"), Napi::Symbol::WellKnown(env, buf));
+                device.Set(Napi::String::New(env, "name"), Napi::String::Utf8Value(env, buf));
             }
         }
 
