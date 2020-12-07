@@ -7,4 +7,3 @@
 #pragma comment(lib, "setupapi.lib")
 
 Napi::Array GetUsbDeviceList(const Napi::CallbackInfo &info);
-int GetDevicePath(LPGUID lpGuid, LPTSTR *pszDevicePath);
