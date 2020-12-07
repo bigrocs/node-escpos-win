@@ -66,8 +66,6 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
             }
             else if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_DEVICEDESC, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
-                std::string Napi::String::Utf8Value() = buf;
-                napi_create_string_utf8(env, buf);
                 device.Set(Napi::String::New(env, "name"), Utf8Encode(buf).c_str());
             }
         }
