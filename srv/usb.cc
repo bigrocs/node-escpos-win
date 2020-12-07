@@ -51,6 +51,7 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
     while (bResult)
     {
         Napi::Object device = Napi::Object::New(env);
+        device.Set(Napi::String::New(env, "count"), nCount);
         // 枚举符合该GUID的设备接口
         spDevInfoData.cbSize = sizeof(SP_DEVINFO_DATA);
         bResult = ::SetupDiEnumDeviceInfo(hDevInfoSet,     // 设备信息集句柄
@@ -60,6 +61,7 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
             DWORD DataT;
             char buf[MAX_PATH];
             char serviceBuf[MAX_PATH];
+            char descBuf[MAX_PATH];
             DWORD nSize = 0;
             if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_DEVICEDESC, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
@@ -72,6 +74,10 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
             if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData,  SPDRP_SERVICE, &DataT, (PBYTE)serviceBuf, sizeof(serviceBuf), &nSize))
             {
                 device.Set(Napi::String::New(env, "service"), Utf8Encode(serviceBuf).c_str());
+            }
+            if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, &DEVPKEY_Device_BusReportedDeviceDesc, &DataT, (PBYTE)descBuf, sizeof(descBuf), &nSize))
+            {
+                device.Set(Napi::String::New(env, "desc"), Utf8Encode(descBuf).c_str());
             }
         }
 
