@@ -22,7 +22,7 @@
 Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
 {
     HDEVINFO hDevInfoSet;
-    SP_DEVINFO_DATA spDevInfoData;
+    PSP_DEVINFO_DATA pspDevInfoData;
 
     PSP_DEVICE_INTERFACE_DETAIL_DATA pDetail;
     SP_DEVICE_INTERFACE_DATA ifdata;
@@ -52,22 +52,22 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
     {
         Napi::Object device = Napi::Object::New(env);
         // 枚举符合该GUID的设备接口
-        spDevInfoData.cbSize = sizeof(SP_DEVINFO_DATA);
+        pspDevInfoData.cbSize = sizeof(SP_DEVINFO_DATA);
         bResult = ::SetupDiEnumDeviceInfo(
             hDevInfoSet,     // 设备信息集句柄
             (ULONG)nCount,   // 设备信息集里的设备序号
-            &spDevInfoData); // 设备接口信息
+            &pspDevInfoData); // 设备接口信息
         if (bResult){
             DWORD DataT;
             TCHAR buf[MAX_PATH];
             DWORD nSize = 0;
-            if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, spDevInfoData, SPDRP_FRIENDLYNAME, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
+            if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, pspDevInfoData, SPDRP_FRIENDLYNAME, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
-                device.Set(Napi::String::New(env, "name"), Utf8Encode(buf));
+                device.Set(Napi::String::New(env, "name"), buf);
             }
-            else if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, spDevInfoData, SPDRP_DEVICEDESC, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
+            else if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, pspDevInfoData, SPDRP_DEVICEDESC, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
-                device.Set(Napi::String::New(env, "name"), Utf8Encode(buf));
+                device.Set(Napi::String::New(env, "name"), buf);
             }
         }
 
