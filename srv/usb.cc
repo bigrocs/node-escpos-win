@@ -8,10 +8,8 @@
             {
                 name : 'USB  打印支持',      // 设备名称
                 service : '服务名称',        // 服务名称
-                desc : '设备描述',           // 设备描述
                 manufacturer : '设备制造商', // 设备制造商
-                vid : 'vid',                // vendorId
-                pid : 'pid',                // productId
+                location : 'location',                // 位置
                 path : '设备路径',           // 设备路径
             }
         ],
@@ -60,8 +58,8 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
         if (bResult){
             DWORD DataT;
             char buf[MAX_PATH];
-            char serviceBuf[MAX_PATH];
-            char descBuf[MAX_PATH];
+            // char serviceBuf[MAX_PATH];
+            // char manufacturerBuf[MAX_PATH];
             DWORD nSize = 0;
             if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_DEVICEDESC, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
@@ -71,13 +69,17 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
             {
                 device.Set(Napi::String::New(env, "name"), Utf8Encode(buf).c_str());
             }
-            if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData,  SPDRP_SERVICE, &DataT, (PBYTE)serviceBuf, sizeof(serviceBuf), &nSize))
+            if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData,  SPDRP_SERVICE, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
-                device.Set(Napi::String::New(env, "service"), Utf8Encode(serviceBuf).c_str());
+                device.Set(Napi::String::New(env, "service"), Utf8Encode(buf).c_str());
             }
-            if (SetupDiGetDevicePropertyW(hDevInfoSet, &spDevInfoData, &DEVPKEY_Device_BusReportedDeviceDesc, &DataT, (PBYTE)descBuf, sizeof(descBuf), &nSize, 0))
+            if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_MFG, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
-                device.Set(Napi::String::New(env, "desc"), descBuf);
+                device.Set(Napi::String::New(env, "manufacturer"), Utf8Encode(buf).c_str());
+            }
+            if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_MFG, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
+            {
+                device.Set(Napi::String::New(env, "location"), Utf8Encode(buf).c_str());
             }
         }
 
