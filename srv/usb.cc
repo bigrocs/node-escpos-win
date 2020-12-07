@@ -57,7 +57,6 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
                                                 (ULONG)nCount,                           // 设备信息集里的设备序号
                                                 &ifdata);                                // 设备接口信息
         obj.Set(Napi::String::New(env, "bResult1"), bResult);
-        obj.Set(Napi::String::New(env, "hDevInfoSet"), hDevInfoSet);
         if (bResult)
         {
             // 取得该设备接口的细节(设备路径)
@@ -70,6 +69,7 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
             obj.Set(Napi::String::New(env, "bResult2"), bResult);
             if (bResult)
             {
+                obj.Set(Napi::String::New(env, "pDetail"), pDetail);
                 device.Set(Napi::String::New(env, "path"), pDetail->DevicePath);    // 复制设备路径到Napi对象
                 nCount++; // 调整计数值
             }
