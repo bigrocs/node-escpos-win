@@ -21,10 +21,10 @@
 */
 Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
 {
+    HDEVINFO hDevInfoSet;
     Napi::Env env = info.Env();
     Napi::Object obj = Napi::Object::New(env); // 初始化函数返回数据对象
     // 取得一个该GUID相关的设备信息集句柄
-    HDEVINFO hDevInfoSet;
     hDevInfoSet = ::SetupDiGetClassDevs((LPGUID)&GUID_DEVINTERFACE_USB_DEVICE,  // class GUID USB
                                         NULL,                                   // 无关键字
                                         NULL,                                   // 不指定父窗口句柄
