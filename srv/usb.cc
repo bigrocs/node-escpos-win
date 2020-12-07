@@ -102,16 +102,16 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
                                                         NULL);                 // 不需额外的设备描述
             if (bResult)
             {
-                device.Set(Napi::String::New(env, "path"), pDetail->DevicePath);    // 复制设备路径到Napi对象
+                device.Set(Napi::String::New(env, "path"), pDetail->DevicePath); // 复制设备路径到Napi对象
+                nCount++;                                                        // 调整计数值
+                list.Set(Napi::Number::New(env, nCount), device);
             }
         }
-        list.Set(Napi::Number::New(env, nCount), device);
-        nCount++; // 调整计数值
     }
     ::GlobalFree(pDetail); // 释放设备接口数据空间
     ::SetupDiDestroyDeviceInfoList(hDevInfoSet); // 关闭设备信息集句柄
     obj.Set(Napi::String::New(env, "list"), list);
-    obj.Set(Napi::String::New(env, "number"), nCount-1);
+    obj.Set(Napi::String::New(env, "number"), nCount);
     return obj;
 }
 
