@@ -73,7 +73,6 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
         list.Set(Napi::Number::New(env, nCount), device);
     }
     ::GlobalFree(pDetail); // 释放设备接口数据空间
-    ::GlobalFree(ifdata);  // 释放设备接口信息数据空间
     ::SetupDiDestroyDeviceInfoList(hDevInfoSet); // 关闭设备信息集句柄
 
     obj.Set(Napi::String::New(env, "number"), nCount);
