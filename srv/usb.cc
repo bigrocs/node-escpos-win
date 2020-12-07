@@ -101,22 +101,3 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
     obj.Set(Napi::String::New(env, "number"), nCount);
     return obj;
 }
-string Utf8Encode(const string &str)
-{
-    if (str.empty())
-    {
-        return string();
-    }
-
-    //System default code page to wide character
-    int wstr_size = MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, NULL, 0);
-    wstring wstr_tmp(wstr_size, 0);
-    MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, &wstr_tmp[0], wstr_size);
-
-    //Wide character to Utf8
-    int str_size = WideCharToMultiByte(CP_UTF8, 0, &wstr_tmp[0], (int)wstr_tmp.size(), NULL, 0, NULL, NULL);
-    string str_utf8(str_size, 0);
-    WideCharToMultiByte(CP_UTF8, 0, &wstr_tmp[0], (int)wstr_tmp.size(), &str_utf8[0], str_size, NULL, NULL);
-
-    return str_utf8;
-}
