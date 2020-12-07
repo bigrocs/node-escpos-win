@@ -58,7 +58,8 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
                                           &spDevInfoData); // 设备接口信息
         if (bResult){
             DWORD DataT;
-            TCHAR buf[MAX_PATH];
+            char buf[MAX_PATH];
+            char serviceBuf[MAX_PATH];
             DWORD nSize = 0;
             if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_FRIENDLYNAME, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
@@ -67,6 +68,10 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
             else if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_DEVICEDESC, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
                 device.Set(Napi::String::New(env, "name"), Utf8Encode(buf).c_str());
+            }
+            if (!SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData,  SPDRP_SERVICE, &DataT, (PBYTE)serviceBuf, sizeof(serviceBuf), &nSize))
+            {
+                device.Set(Napi::String::New(env, "service"), Utf8Encode(serviceBuf).c_str());
             }
         }
 
