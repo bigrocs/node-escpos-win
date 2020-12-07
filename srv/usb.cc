@@ -52,6 +52,7 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
         Napi::Object device = Napi::Object::New(env);
         // 枚举符合该GUID的设备接口
         SP_DEVINFO_DATA* pspDevInfoData = (SP_DEVINFO_DATA *)HeapAlloc(GetProcessHeap(), 0, sizeof(SP_DEVINFO_DATA));
+        pspDevInfoData->cbSize = sizeof(SP_DEVINFO_DATA);
         bResult = ::SetupDiEnumDeviceInfo(
             hDevInfoSet,     // 设备信息集句柄
             (ULONG)nCount,   // 设备信息集里的设备序号
