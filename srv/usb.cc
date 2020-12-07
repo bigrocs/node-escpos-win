@@ -21,6 +21,7 @@
 */
 Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
 {
+    Napi::Env env = info.Env();
     Napi::Object obj = Napi::Object::New(env); // 初始化函数返回数据对象
     // 取得一个该GUID相关的设备信息集句柄
     HDEVINFO hDevInfoSet;

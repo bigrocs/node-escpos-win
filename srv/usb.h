@@ -6,4 +6,4 @@
 #include <usbiodef.h>
 #pragma comment(lib, "setupapi.lib")
 
-Napi::Array GetUsbDeviceList(const Napi::CallbackInfo &info);
+Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info);
