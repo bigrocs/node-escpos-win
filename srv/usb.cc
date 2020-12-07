@@ -22,6 +22,9 @@
 Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
 {
     HDEVINFO hDevInfoSet;
+    PSP_DEVICE_INTERFACE_DETAIL_DATA pDetail;
+    SP_DEVICE_INTERFACE_DATA ifdata;
+
     Napi::Env env = info.Env();
     Napi::Object obj = Napi::Object::New(env); // 初始化函数返回数据对象
     // 取得一个该GUID相关的设备信息集句柄
@@ -34,15 +37,13 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
     {
         obj.Set(Napi::String::New(env, "error"), "Failed to get device information");
     }
+
     // 申请设备接口数据空间
-    PSP_DEVICE_INTERFACE_DETAIL_DATA pDetail;
     pDetail = (PSP_DEVICE_INTERFACE_DETAIL_DATA)::GlobalAlloc(LMEM_ZEROINIT, INTERFACE_DETAIL_SIZE);
     pDetail->cbSize = sizeof(SP_DEVICE_INTERFACE_DETAIL_DATA);
-    
-    // 初始化下面使用的变量
+
     int nCount = 0;
     BOOL bResult = true;
-    SP_DEVICE_INTERFACE_DATA ifdata;
     Napi::Array list = Napi::Array::New(env);
     // 设备序号=0,1,2... 逐一测试设备接口，到失败为止
     while (bResult)
@@ -55,6 +56,7 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
                                                 (LPGUID)&GUID_DEVINTERFACE_USB_DEVICE,   // GUID
                                                 (ULONG)nCount,                           // 设备信息集里的设备序号
                                                 &ifdata);                                // 设备接口信息
+        obj.Set(Napi::String::New(env, "bResult1"), bResult);
         if (bResult)
         {
             // 取得该设备接口的细节(设备路径)
@@ -64,6 +66,7 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
                                                         INTERFACE_DETAIL_SIZE, // 输出缓冲区大小
                                                         NULL,                  // 不需计算输出缓冲区大小(直接用设定值)
                                                         NULL);                 // 不需额外的设备描述
+            obj.Set(Napi::String::New(env, "bResult2"), bResult);
             if (bResult)
             {
                 device.Set(Napi::String::New(env, "path"), pDetail->DevicePath);    // 复制设备路径到Napi对象
