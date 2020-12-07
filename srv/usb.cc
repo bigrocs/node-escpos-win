@@ -70,7 +70,7 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
                 nCount++; // 调整计数值
             }
         }
-        list.Set(Napi::Number::New(env, i), device);
+        list.Set(Napi::Number::New(env, nCount), device);
     }
     ::GlobalFree(pDetail); // 释放设备接口数据空间
     ::GlobalFree(ifdata);  // 释放设备接口信息数据空间
