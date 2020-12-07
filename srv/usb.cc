@@ -9,8 +9,9 @@
                 name : 'USB  打印支持',      // 设备名称
                 service : '服务名称',        // 服务名称
                 manufacturer : '设备制造商', // 设备制造商
-                location : 'location',                // 位置
+                location : 'location',      // 位置
                 path : '设备路径',           // 设备路径
+                count: 0               // 计数
             }
         ],
         number : 1, //设备数量
@@ -77,7 +78,7 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
             {
                 device.Set(Napi::String::New(env, "manufacturer"), Utf8Encode(buf).c_str());
             }
-            if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_HARDWAREID, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
+            if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_LOCATION_PATHS, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
                 device.Set(Napi::String::New(env, "location"), Utf8Encode(buf).c_str());
             }
@@ -103,10 +104,10 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
             if (bResult)
             {
                 device.Set(Napi::String::New(env, "path"), pDetail->DevicePath);    // 复制设备路径到Napi对象
-                nCount++; // 调整计数值
             }
         }
         list.Set(Napi::Number::New(env, nCount), device);
+        nCount++; // 调整计数值
     }
     ::GlobalFree(pDetail); // 释放设备接口数据空间
     ::SetupDiDestroyDeviceInfoList(hDevInfoSet); // 关闭设备信息集句柄
