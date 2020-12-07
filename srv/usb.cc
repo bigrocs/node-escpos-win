@@ -52,7 +52,7 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
     {
         Napi::Object device = Napi::Object::New(env);
         // 枚举符合该GUID的设备接口
-        spDevInfoData->cbSize = sizeof(SP_DEVINFO_DATA);
+        spDevInfoData.cbSize = sizeof(SP_DEVINFO_DATA);
         bResult = ::SetupDiEnumDeviceInfo(hDevInfoSet,     // 设备信息集句柄
                                           (ULONG)nCount,   // 设备信息集里的设备序号
                                           &spDevInfoData); // 设备接口信息
