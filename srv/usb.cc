@@ -56,7 +56,6 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
                                                 (LPGUID)&GUID_DEVINTERFACE_USB_DEVICE,   // GUID
                                                 (ULONG)nCount,                           // 设备信息集里的设备序号
                                                 &ifdata);                                // 设备接口信息
-        obj.Set(Napi::String::New(env, "bResult1"), bResult);
         if (bResult)
         {
             // 取得该设备接口的细节(设备路径)
@@ -66,10 +65,8 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
                                                         INTERFACE_DETAIL_SIZE, // 输出缓冲区大小
                                                         NULL,                  // 不需计算输出缓冲区大小(直接用设定值)
                                                         NULL);                 // 不需额外的设备描述
-            obj.Set(Napi::String::New(env, "bResult2"), bResult);
             if (bResult)
             {
-                obj.Set(Napi::String::New(env, "bResult3"), bResult);
                 device.Set(Napi::String::New(env, "path"), pDetail->DevicePath);    // 复制设备路径到Napi对象
                 nCount++; // 调整计数值
             }
@@ -78,7 +75,7 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
     }
     ::GlobalFree(pDetail); // 释放设备接口数据空间
     ::SetupDiDestroyDeviceInfoList(hDevInfoSet); // 关闭设备信息集句柄
-
+    obj.Set(Napi::String::New(env, "list"), list);
     obj.Set(Napi::String::New(env, "number"), nCount);
     return obj;
 }
