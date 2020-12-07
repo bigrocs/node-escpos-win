@@ -69,7 +69,7 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
             obj.Set(Napi::String::New(env, "bResult2"), bResult);
             if (bResult)
             {
-                obj.Set(Napi::String::New(env, "pDetail"), pDetail);
+                obj.Set(Napi::String::New(env, "bResult3"), bResult);
                 device.Set(Napi::String::New(env, "path"), pDetail->DevicePath);    // 复制设备路径到Napi对象
                 nCount++; // 调整计数值
             }
