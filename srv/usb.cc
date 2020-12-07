@@ -75,7 +75,7 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
             {
                 device.Set(Napi::String::New(env, "service"), Utf8Encode(serviceBuf).c_str());
             }
-            if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, &DEVPKEY_Device_BusReportedDeviceDesc, &DataT, (PBYTE)descBuf, sizeof(descBuf), &nSize))
+            if (SetupDiGetDevicePropertyW(hDevInfoSet, &spDevInfoData, &DEVPKEY_Device_BusReportedDeviceDesc, &DataT, (PBYTE)descBuf, sizeof(descBuf), &nSize, 0))
             {
                 device.Set(Napi::String::New(env, "desc"), Utf8Encode(descBuf).c_str());
             }
