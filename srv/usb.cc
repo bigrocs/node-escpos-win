@@ -50,7 +50,6 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
     while (bResult)
     {
         Napi::Object device = Napi::Object::New(env);
-        device.Set(Napi::String::New(env, "count"), nCount);
         // 枚举符合该GUID的设备接口
         spDevInfoData.cbSize = sizeof(SP_DEVINFO_DATA);
         bResult = ::SetupDiEnumDeviceInfo(hDevInfoSet,     // 设备信息集句柄
@@ -112,7 +111,7 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
     ::GlobalFree(pDetail); // 释放设备接口数据空间
     ::SetupDiDestroyDeviceInfoList(hDevInfoSet); // 关闭设备信息集句柄
     obj.Set(Napi::String::New(env, "list"), list);
-    obj.Set(Napi::String::New(env, "number"), nCount);
+    obj.Set(Napi::String::New(env, "number"), nCount-1);
     return obj;
 }
 
