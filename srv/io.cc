@@ -34,6 +34,6 @@ Object Write(const CallbackInfo &info) {
 
 BOOL WriteData(String devicePath, Object *obj)
 {
-    &obj.Set(String::New(env, "WriteData"), "WriteData");
+    &obj.Set(String::New(env, "WriteData"), devicePath);
     return true;
 }
