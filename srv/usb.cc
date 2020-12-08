@@ -1,7 +1,4 @@
 #include "usb.h"  // NOLINT(build/include)
-
-using namespace Napi;
-
 #define INTERFACE_DETAIL_SIZE (1024)    // SetupDiGetInterfaceDeviceDetail所需要的输出长度，定义足够大
 /*
     GetUsbDeviceList
