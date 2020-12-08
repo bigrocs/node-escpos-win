@@ -1,17 +1,19 @@
 #include <napi.h>
 #include "usb.h" // NOLINT(build/include)
 
-Napi::String Hello(const Napi::CallbackInfo& info) {
-  Napi::Env env = info.Env();
-  return Napi::String::New(env, "Hello World");
+using namespace Napi;
+
+String Hello(const CallbackInfo& info) {
+  Env env = info.Env();
+  return String::New(env, "Hello World");
 }
 
 
-Napi::Object Init(Napi::Env env, Napi::Object exports) {
-  exports.Set(Napi::String::New(env, "hello"),
-              Napi::Function::New(env, Hello));
-  exports.Set(Napi::String::New(env, "GetUsbDeviceList"),
-              Napi::Function::New(env, GetUsbDeviceList));
+Object Init(Env env, Object exports) {
+  exports.Set(String::New(env, "hello"),
+              Function::New(env, Hello));
+  exports.Set(String::New(env, "GetUsbDeviceList"),
+              Function::New(env, GetUsbDeviceList));
   return exports;
 }
 
