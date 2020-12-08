@@ -32,7 +32,7 @@ Object Write(const CallbackInfo &info) {
     return obj;
 }
 
-BOOL WriteData(string devicePath, char *meg, Object *obj)
+BOOL WriteData(string devicePath, char *data, Object *obj)
 {
     obj.Set(String::New(env, "WriteData"), "WriteData");
     return true;
