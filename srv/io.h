@@ -4,8 +4,8 @@
 using namespace Napi;
 
 struct PrintResult{
-    std::BOOL success;
-    std::DWORD err;
+    BOOL success;
+    DWORD err;
 };
 
 Object Write(const CallbackInfo &info);
