@@ -9,7 +9,7 @@
 
 using namespace std;
 
-struct List {
+struct DeviceInfo{
     string name;
     string service;
     string manufacturer;
@@ -23,5 +23,5 @@ struct Result
     DWORD err;
 };
 
-void GetUsbDeviceList();
+void GetUsbDeviceList(list<DeviceInfo> &devicelist, Result &result);
 string Utf8Encode(const string &str);
