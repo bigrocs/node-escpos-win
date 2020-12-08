@@ -22,12 +22,17 @@ Object Write(const CallbackInfo &info) {
     }
     String devicePath = info[0].As<String>();
     Buffer<uint16_t> data = info[1].As<Buffer<uint16_t>>();
-    
+
     obj.Set(String::New(env, "devicePath"), devicePath.Utf8Value().c_str());
     obj.Set(String::New(env, "data"), data);
     obj.Set(String::New(env, "data.length"), data.Length());
     obj.Set(String::New(env, "test"), "Hello Write Object");
 
-
+    PrintResult *printResult = {};
+    WriteData(devicePath.Utf8Value().c_str(), data, data.Length(), PrintResult);
     return obj;
+}
+
+BOOL WriteData(string devicePath, char *meg, size_t size, Result *result){
+    return true;
 }
