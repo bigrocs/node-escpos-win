@@ -29,7 +29,8 @@ Object Write(const CallbackInfo &info) {
     obj.Set(String::New(env, "test"), "Hello Write Object");
 
     Result *result = (Result *)malloc(sizeof(Result));
-    WriteData(devicePath.Utf8Value().c_str(), &data, result);
+    char *d = data.Data();
+    WriteData(devicePath.Utf8Value().c_str(), d, result);
     return obj;
 }
 
