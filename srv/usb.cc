@@ -46,6 +46,7 @@ void GetUsbDeviceList(list<DeviceInfo> &devicelist, ResultInfo &resultInfo)
     BOOL bResult = true;
     while (bResult)
     {
+        DeviceInfo deviceinfo;
         // 枚举符合该GUID的设备接口
         spDevInfoData.cbSize = sizeof(SP_DEVINFO_DATA);
         bResult = ::SetupDiEnumDeviceInfo(hDevInfoSet,     // 设备信息集句柄
@@ -56,7 +57,6 @@ void GetUsbDeviceList(list<DeviceInfo> &devicelist, ResultInfo &resultInfo)
             DWORD DataT;
             char buf[MAX_PATH];
             DWORD nSize = 0;
-            DeviceInfo deviceinfo;
             if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_DEVICEDESC, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
                 deviceinfo.name = Utf8Encode(buf).c_str();
