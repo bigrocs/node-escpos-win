@@ -114,8 +114,7 @@ Object GetUsbDeviceList(const CallbackInfo &info) {
     return obj;
 }
 
-std::string Utf8Encode(const std::string &str)
-{
+std::string Utf8Encode(const std::string &str) {
     if (str.empty())
     {
         return std::string();
