@@ -39,7 +39,7 @@ Object Write(const CallbackInfo &info) {
     BOOL b = WriteFile(
         hLPT,
         data,
-        (DWORD)Buffer::Length(data),
+        (DWORD)data::ByteLength(),
         &dwWrite,
         NULL);
     if (!b)
