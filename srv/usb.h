@@ -6,7 +6,7 @@
 #include <usbiodef.h>
 #pragma comment(lib, "setupapi.lib")
 
-using namespace std;
+using namespace Napi;
 
 Object GetUsbDeviceList(const CallbackInfo &info);
-string Utf8Encode(const string &str);
+std::string Utf8Encode(const std::string &str);
