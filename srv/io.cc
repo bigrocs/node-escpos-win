@@ -28,7 +28,7 @@ Object Write(const CallbackInfo &info) {
     obj.Set(String::New(env, "test"), "Hello Write Object");
 
     DWORD dwWrite;
-    HANDLE hLPT = CreateFile(devicePath.c_str(), GENERIC_READ | GENERIC_WRITE, 0, NULL,
+    HANDLE hLPT = CreateFile(devicePath, GENERIC_READ | GENERIC_WRITE, 0, NULL,
                              OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
 
     if (hLPT == INVALID_HANDLE_VALUE)
@@ -39,7 +39,7 @@ Object Write(const CallbackInfo &info) {
     BOOL b = WriteFile(
         hLPT,
         data,
-        (DWORD)size,
+        (DWORD)Buffer::Length(data),
         &dwWrite,
         NULL);
     if (!b)
