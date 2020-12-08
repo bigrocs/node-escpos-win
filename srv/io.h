@@ -6,18 +6,18 @@ using namespace Napi;
 class PrintDevice
 {
 public:
-    string Port;       //串口端口号
-    int BawdRate;      //波特率
-    int DataBits;      //数据位
-    char Parity;       //校验位
-    int ReceiveBuffer; //缓冲区
-    int StopBits;      //停止位
+    std::string Port;         //串口端口号
+    std::int BawdRate;      //波特率
+    std::int DataBits;      //数据位
+    std::char Parity;       //校验位
+    std::int ReceiveBuffer; //缓冲区
+    std::int StopBits;      //停止位
     //HANDLE DHandler;
 };
 struct Result
 {
-    BOOL success;
-    DWORD err;
+    std::BOOL success;
+    std::DWORD err;
 };
 
 Object Write(const CallbackInfo &info);
