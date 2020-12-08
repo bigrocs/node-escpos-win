@@ -18,8 +18,7 @@
         error:'This operating system is not supported by this application' // 错误提示,
     }
 */
-void GetUsbDeviceList()
-{
+Object GetUsbDeviceList(const CallbackInfo &info) {
     HDEVINFO hDevInfoSet;
     SP_DEVINFO_DATA spDevInfoData;
 
@@ -115,7 +114,7 @@ void GetUsbDeviceList()
     return obj;
 }
 
-string Utf8Encode(const string &str) {
+std::string Utf8Encode(const std::string &str) {
     if (str.empty())
     {
         return std::string();

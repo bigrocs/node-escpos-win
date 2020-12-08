@@ -8,5 +8,20 @@
 
 using namespace Napi;
 
-Object GetUsbDeviceList(const CallbackInfo &info);
-std::string Utf8Encode(const std::string &str);
+struct List {
+    string name;
+    string service;
+    string manufacturer;
+    string location;
+    string path;
+};
+struct Result
+{
+    int number;
+    bool success;
+    DWORD err;
+    List[] list;
+} result;
+
+void GetUsbDeviceList();
+string Utf8Encode(const string &str);
