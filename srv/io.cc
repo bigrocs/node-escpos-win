@@ -28,13 +28,12 @@ Object Write(const CallbackInfo &info) {
     obj.Set(String::New(env, "data.length"), data.Length());
     obj.Set(String::New(env, "test"), "Hello Write Object");
 
-    char *bfData = data.Data();
     Result *result = (Result *)malloc(sizeof(Result));
-    WriteData(devicePath.Utf8Value().c_str(), result);
+    WriteData(devicePath.Utf8Value().c_str(), data, result);
     return obj;
 }
 
-BOOL WriteData(std::string devicePath, Result *result)
+BOOL WriteData(std::string devicePath, char data, Result *result)
 {
     return true;
 }

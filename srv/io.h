@@ -9,4 +9,4 @@ struct Result{
 };
 
 Object Write(const CallbackInfo &info);
-BOOL WriteData(std::string devicePath, Result *result);
+BOOL WriteData(std::string devicePath, char data, Result *result);
