@@ -4,4 +4,4 @@
 using namespace Napi;
 
 Object Write(const CallbackInfo &info);
-BOOL WriteData(string devicePath, char *data, Object *obj)
+BOOL WriteData(String devicePath, char *data, Object *obj)
