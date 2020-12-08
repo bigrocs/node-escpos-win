@@ -3,4 +3,4 @@
 
 using namespace Napi;
 
-String Write(const CallbackInfo &info);
+Object Write(const CallbackInfo &info);

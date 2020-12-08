@@ -1,7 +1,9 @@
 #include "io.h"
 
-String Write(const CallbackInfo &info)
+Object Write(const CallbackInfo &info)
 {
     Env env = info.Env();
-    return String::New(env, "Hello Write1");
+    Object obj = Object::New(env); // 初始化函数返回数据对象
+    obj.Set(String::New(env, "number"), "Hello Write Object");
+    return obj;
 }
