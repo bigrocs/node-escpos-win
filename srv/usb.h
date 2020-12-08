@@ -21,8 +21,7 @@ struct Result
     int number;
     bool success;
     DWORD err;
-    List[] list;
-} result;
+};
 
 void GetUsbDeviceList();
 string Utf8Encode(const string &str);
