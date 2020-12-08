@@ -1,5 +1,4 @@
 #include <napi.h>
-#include <list>
 #include "usb.h"
 // #include "io.h"
 
@@ -16,25 +15,26 @@ Napi::Object UsbDeviceList(const Napi::CallbackInfo &info)
   Napi::Env env = info.Env();
   Napi::Object obj = Napi::Object::New(env); // 初始化函数返回数据对象
 
+  list<DeviceInfo>::iterator itor;
   list<DeviceInfo> deviceList;
   ResultInfo resultInfo;
   GetUsbDeviceList(deviceList, resultInfo);
 
   Napi::Array list = Napi::Array::New(env);
-  list<usb::DeviceInfo>::iterator itor = deviceList.begin();
-  // while (itor != deviceList.end())
-  // {
-
-  //   obj.Set(String::New(env, "123"), itor->name);
-
-  //   // Object device = Object::New(env);
-  //   // device.Set(String::New(env, "name"), itor.name.c_str());
-  //   // device.Set(String::New(env, "service"), itor.service.c_str());
-  //   // device.Set(String::New(env, "manufacturer"), itor.manufacturer.c_str());
-  //   // device.Set(String::New(env, "location"), itor.location.c_str());
-  //   // device.Set(String::New(env, "path"), itor.path.c_str());
-  //   // list.Set(Number::New(env, itor), device);
-  // }
+  itor = deviceList.begin();
+  int count = 0;
+  while (itor != deviceList.end())
+  {
+    Napi::Object device = Napi::Object::New(env);
+    device.Set(Napi::String::New(env, "name"), itor->name);
+    device.Set(Napi::String::New(env, "service"), itor->service);
+    device.Set(Napi::String::New(env, "manufacturer"), itor->manufacturer);
+    device.Set(Napi::String::New(env, "location"), itor->location);
+    device.Set(Napi::String::New(env, "path"), itor->path);
+    list.Set(Napi::Number::New(env, count), device);
+    itor++;
+    count++;
+  }
   obj.Set(Napi::String::New(env, "list"), list);
   obj.Set(Napi::String::New(env, "err"), resultInfo.err);
   obj.Set(Napi::String::New(env, "number"), deviceList.size());
