@@ -1,5 +1,6 @@
 #include <napi.h>
 #include <windows.h>
+#include <string>
 #include <winioctl.h>
 #include <initguid.h>
 #include <setupapi.h>
@@ -9,11 +10,11 @@
 using namespace Napi;
 
 struct List {
-    char name;
-    char service;
-    char manufacturer;
-    char location;
-    char path;
+    string name;
+    string service;
+    string manufacturer;
+    string location;
+    string path;
 };
 // struct Result
 // {
