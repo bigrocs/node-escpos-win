@@ -7,7 +7,7 @@
 #include <usbiodef.h>
 #pragma comment(lib, "setupapi.lib")
 
-using namespace Napi;
+using namespace std;
 
 struct List {
     string name;
