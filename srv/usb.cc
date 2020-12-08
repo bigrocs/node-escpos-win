@@ -3,7 +3,7 @@
 /*
     GetUsbDeviceList
     返回的json数据
-    Napi::Object {
+    Object {
         list : [                             // 设备列表
             {
                 name : 'USB  打印支持',      // 设备名称
@@ -18,7 +18,7 @@
         error:'This operating system is not supported by this application' // 错误提示,
     }
 */
-Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
+Object GetUsbDeviceList(const CallbackInfo &info)
 {
     HDEVINFO hDevInfoSet;
     SP_DEVINFO_DATA spDevInfoData;
@@ -26,8 +26,8 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
     PSP_DEVICE_INTERFACE_DETAIL_DATA pDetail;
     SP_DEVICE_INTERFACE_DATA ifdata;
 
-    Napi::Env env = info.Env();
-    Napi::Object obj = Napi::Object::New(env); // 初始化函数返回数据对象
+    Env env = info.Env();
+    Object obj = Object::New(env); // 初始化函数返回数据对象
     // 取得一个该GUID相关的设备信息集句柄
     hDevInfoSet = ::SetupDiGetClassDevs((LPGUID)&GUID_DEVINTERFACE_USB_DEVICE,  // class GUID USB
                                         NULL,                                   // 无关键字
@@ -36,7 +36,7 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
     // 获取设备信息失败
     if (hDevInfoSet == INVALID_HANDLE_VALUE)
     {
-        obj.Set(Napi::String::New(env, "error"), "Failed to get device information");
+        obj.Set(String::New(env, "error"), "Failed to get device information");
     }
 
     // 申请设备接口数据空间
@@ -45,11 +45,11 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
 
     int nCount = 0;
     BOOL bResult = true;
-    Napi::Array list = Napi::Array::New(env);
+    Array list = Array::New(env);
     // 设备序号=0,1,2... 逐一测试设备接口，到失败为止
     while (bResult)
     {
-        Napi::Object device = Napi::Object::New(env);
+        Object device = Object::New(env);
         // 枚举符合该GUID的设备接口
         spDevInfoData.cbSize = sizeof(SP_DEVINFO_DATA);
         bResult = ::SetupDiEnumDeviceInfo(hDevInfoSet,     // 设备信息集句柄
@@ -63,23 +63,23 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
             DWORD nSize = 0;
             if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_DEVICEDESC, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
-                device.Set(Napi::String::New(env, "name"), Utf8Encode(buf).c_str());
+                device.Set(String::New(env, "name"), Utf8Encode(buf).c_str());
             }
             else if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_FRIENDLYNAME, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
-                device.Set(Napi::String::New(env, "name"), Utf8Encode(buf).c_str());
+                device.Set(String::New(env, "name"), Utf8Encode(buf).c_str());
             }
             if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData,  SPDRP_SERVICE, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
-                device.Set(Napi::String::New(env, "service"), Utf8Encode(buf).c_str());
+                device.Set(String::New(env, "service"), Utf8Encode(buf).c_str());
             }
             if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_MFG, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
-                device.Set(Napi::String::New(env, "manufacturer"), Utf8Encode(buf).c_str());
+                device.Set(String::New(env, "manufacturer"), Utf8Encode(buf).c_str());
             }
             if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_LOCATION_PATHS, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
-                device.Set(Napi::String::New(env, "location"), Utf8Encode(buf).c_str());
+                device.Set(String::New(env, "location"), Utf8Encode(buf).c_str());
             }
         }
 
@@ -102,16 +102,16 @@ Napi::Object GetUsbDeviceList(const Napi::CallbackInfo &info)
                                                         NULL);                 // 不需额外的设备描述
             if (bResult)
             {
-                device.Set(Napi::String::New(env, "path"), pDetail->DevicePath); // 复制设备路径到Napi对象
-                list.Set(Napi::Number::New(env, nCount), device);
+                device.Set(String::New(env, "path"), pDetail->DevicePath); // 复制设备路径到Napi对象
+                list.Set(Number::New(env, nCount), device);
                 nCount++;                                                        // 调整计数值
             }
         }
     }
     ::GlobalFree(pDetail); // 释放设备接口数据空间
     ::SetupDiDestroyDeviceInfoList(hDevInfoSet); // 关闭设备信息集句柄
-    obj.Set(Napi::String::New(env, "list"), list);
-    obj.Set(Napi::String::New(env, "number"), nCount);
+    obj.Set(String::New(env, "list"), list);
+    obj.Set(String::New(env, "number"), nCount);
     return obj;
 }
 
