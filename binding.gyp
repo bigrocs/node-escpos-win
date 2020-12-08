@@ -4,7 +4,8 @@
       "target_name": "addon",
       "sources": [
         "srv/binding.cc",
-        "srv/usb.cc"
+        "srv/usb.cc",
+        "srv/io.cc"
       ],
       "cflags!": ["-fno-exceptions"],
       "cflags_cc!": ["-fno-exceptions"],
