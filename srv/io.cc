@@ -22,13 +22,15 @@ Object Write(const CallbackInfo &info) {
     }
     String devicePath = info[0].As<String>();
     ArrayBuffer data = info[1].As<ArrayBuffer>();
+    char *deviceBf = (char *)malloc(devicePath->Utf8Length() + 1);
 
+    obj.Set(String::New(env, "deviceBf"), deviceBf);
     obj.Set(String::New(env, "devicePath"), devicePath);
     obj.Set(String::New(env, "data"), data);
     obj.Set(String::New(env, "test"), "Hello Write Object");
 
     // DWORD dwWrite;
-    HANDLE hLPT = CreateFile(devicePath, GENERIC_READ | GENERIC_WRITE, 0, NULL,
+    HANDLE hLPT = CreateFile(deviceBf, GENERIC_READ | GENERIC_WRITE, 0, NULL,
                              OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
 
     if (hLPT == INVALID_HANDLE_VALUE)
