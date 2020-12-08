@@ -1,5 +1,6 @@
 #include <napi.h>
-#include "usb.h" // NOLINT(build/include)
+#include "usb.h"
+#include "io.h"
 
 using namespace Napi;
 
@@ -8,11 +9,6 @@ String Hello(const CallbackInfo& info) {
   return String::New(env, "Hello World");
 }
 
-String Write(const CallbackInfo &info)
-{
-  Env env = info.Env();
-  return String::New(env, "Hello Write");
-}
 
 Object Init(Env env, Object exports) {
   exports.Set(String::New(env, "hello"),
