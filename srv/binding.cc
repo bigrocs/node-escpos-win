@@ -16,6 +16,10 @@ Object UsbDeviceList(const CallbackInfo &info)
   obj.Set(String::New(env, "error"), NULL);
   obj.Set(String::New(env, "list"), "list");
   obj.Set(String::New(env, "number"), 0);
+
+  list<DeviceInfo> deviceList;
+  ResultInfo resultInfo;
+  GetUsbDeviceList(deviceList, resultInfo);
   return obj;
 }
 

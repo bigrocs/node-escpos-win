@@ -18,7 +18,7 @@
 //         error:'This operating system is not supported by this application' // 错误提示,
 //     }
 // */
-void GetUsbDeviceList(list<DeviceInfo> &devicelist, Result &result)
+void GetUsbDeviceList(list<DeviceInfo> &devicelist, ResultInfo &resultInfo)
 {
 
 }

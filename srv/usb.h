@@ -16,12 +16,12 @@ struct DeviceInfo{
     string location;
     string path;
 };
-struct Result
+struct ResultInfo
 {
     int number;
     bool success;
     DWORD err;
 };
 
-void GetUsbDeviceList(list<DeviceInfo> &devicelist, Result &result);
+void GetUsbDeviceList(list<DeviceInfo> &devicelist, ResultInfo &resultInfo);
 string Utf8Encode(const string &str);
