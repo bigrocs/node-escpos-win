@@ -1,6 +1,6 @@
 var addon = require('bindings')('addon');
 
-console.log(addon.GetUsbDeviceList()); // 'world'
+console.log(addon.Write()); // 'world'
 const win32Escpos = function () {
     if (process.platform === 'win32') {
         console.log(123);
