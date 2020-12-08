@@ -25,7 +25,7 @@ Object Write(const CallbackInfo &info) {
     // char *deviceBf = (char *)malloc(devicePath->Utf8Length() + 1);
 
     // obj.Set(String::New(env, "deviceBf"), deviceBf);
-    obj.Set(String::New(env, "devicePath"), devicePath);
+    obj.Set(String::New(env, "devicePath"), devicePath->Utf8Length());
     obj.Set(String::New(env, "data"), data);
     obj.Set(String::New(env, "test"), "Hello Write Object");
 
