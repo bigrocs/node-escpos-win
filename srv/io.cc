@@ -28,12 +28,11 @@ Object Write(const CallbackInfo &info) {
     obj.Set(String::New(env, "data.length"), data.Length());
     obj.Set(String::New(env, "test"), "Hello Write Object");
 
-    WriteData(env, devicePath, &obj);
+    WriteData(devicePath.Utf8Value().c_str());
     return obj;
 }
 
-BOOL WriteData(Env env, String devicePath, Object *obj)
+BOOL WriteData(string devicePath)
 {
-    obj.Set(String::New(env, "WriteData"), devicePath);
     return true;
 }
