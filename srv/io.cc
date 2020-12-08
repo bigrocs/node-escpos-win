@@ -4,8 +4,7 @@ Object Write(const CallbackInfo &info) {
     Env env = info.Env();
     if (info.Length() < 2)
     {
-        TypeError::New(env, "Wrong number of arguments, must be 2")
-            .ThrowAsJavaScriptException();
+        TypeError::New(env, "Wrong number of arguments, must be 2").ThrowAsJavaScriptException();
         return env.Null();
     }
 
