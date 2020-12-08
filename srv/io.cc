@@ -20,7 +20,7 @@ Object Write(const CallbackInfo &info) {
         TypeError::New(env, "the second argument must be a buffer").ThrowAsJavaScriptException();
         return obj;
     }
-    Napi::String arg0 = info[0].As<String>().Utf8Value();
+    Napi::String arg0 = info[0].As<Napi::String>().Utf8Value();
     ArrayBuffer arg1 = info[1].As<ArrayBuffer>();
 
     obj.Set(String::New(env, "arg0"), arg0);
