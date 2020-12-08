@@ -32,7 +32,7 @@ Object Write(const CallbackInfo &info) {
     return obj;
 }
 
-BOOL WriteData(string devicePath)
+BOOL WriteData(std::string devicePath)
 {
     return true;
 }
