@@ -32,7 +32,7 @@ Object Write(const CallbackInfo &info) {
 
     DWORD dwWrite;
     HANDLE hLPT = CreateFile(devicePath.Utf8Value().c_str(), GENERIC_READ | GENERIC_WRITE, 0, NULL,
-                             OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
+                             OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
     if (hLPT == INVALID_HANDLE_VALUE)
     {
@@ -40,11 +40,13 @@ Object Write(const CallbackInfo &info) {
         obj.Set(String::New(env, "error"), GetLastError());
         return obj;
     }
+    DWORD iBytesLength;
+    const char *chInitCode = "\x0D\x1B\x40";
     BOOL b = WriteFile(
         hLPT,
-        data,
-        (DWORD)data.Length(),
-        &dwWrite,
+        chInitCode,
+        (DWORD)3L,
+        &iBytesLength,
         NULL);
     if (!b)
     {
