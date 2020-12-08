@@ -1,5 +1,5 @@
 #include <napi.h>
-#include "usb.h"
+// #include "usb.h"
 // #include "io.h"
 
 using namespace Napi;
@@ -9,6 +9,11 @@ String Hello(const CallbackInfo& info) {
   return String::New(env, "Hello World");
 }
 
+String GetUsbDeviceList(const CallbackInfo &info)
+{
+  Env env = info.Env();
+  return String::New(env, "Hello GetUsbDeviceList");
+}
 
 Object Init(Env env, Object exports) {
   exports.Set(String::New(env, "hello"),
