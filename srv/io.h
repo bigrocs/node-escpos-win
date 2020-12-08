@@ -3,10 +3,10 @@
 
 using namespace Napi;
 
-struct PrintResult{
+struct Result{
     BOOL success;
     DWORD err;
 };
 
 Object Write(const CallbackInfo &info);
-BOOL WriteData(std::string devicePath);
+BOOL WriteData(std::string devicePath, Result *result);
