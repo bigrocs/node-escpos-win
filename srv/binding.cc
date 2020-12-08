@@ -15,11 +15,12 @@ Napi::Object UsbDeviceList(const Napi::CallbackInfo &info)
   Napi::Env env = info.Env();
   Napi::Object obj = Napi::Object::New(env); // 初始化函数返回数据对象
 
+  // 读取usb设备列表
   list<DeviceInfo>::iterator itor;
   list<DeviceInfo> deviceList;
   ResultInfo resultInfo;
   GetUsbDeviceList(deviceList, resultInfo);
-
+  // 分配获取数据
   Napi::Array list = Napi::Array::New(env);
   itor = deviceList.begin();
   int count = 0;
@@ -35,6 +36,7 @@ Napi::Object UsbDeviceList(const Napi::CallbackInfo &info)
     itor++;
     count++;
   }
+  // 数据构建完成构建返回数据结构
   obj.Set(Napi::String::New(env, "list"), list);
   obj.Set(Napi::String::New(env, "err"), resultInfo.err);
   obj.Set(Napi::String::New(env, "number"), deviceList.size());
