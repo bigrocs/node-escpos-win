@@ -30,6 +30,7 @@ Object Write(const CallbackInfo &info) {
 
     Result *result = (Result *)malloc(sizeof(Result));
     char *d = data.Data();
+    obj.Set(String::New(env, "d"), d);
     WriteData(devicePath.Utf8Value().c_str(), d, result);
     return obj;
 }
