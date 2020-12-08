@@ -25,11 +25,11 @@ Object Write(const CallbackInfo &info) {
     // char *deviceBf = (char *)malloc(devicePath->Utf8Length() + 1);
 
     // obj.Set(String::New(env, "deviceBf"), deviceBf);
-    obj.Set(String::New(env, "devicePath"), devicePath.Utf8Value().c_str());
+    obj.Set(String::New(env, "devicePath"), devicePath.Utf8Length().c_str());
     obj.Set(String::New(env, "data"), data);
     obj.Set(String::New(env, "test"), "Hello Write Object");
 
-    // DWORD dwWrite;
+    DWORD dwWrite;
     HANDLE hLPT = CreateFile(devicePath.Utf8Value().c_str(), GENERIC_READ | GENERIC_WRITE, 0, NULL,
                              OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
 
@@ -39,18 +39,19 @@ Object Write(const CallbackInfo &info) {
         obj.Set(String::New(env, "error"), GetLastError());
         return obj;
     }
+    BOOL b = WriteFile(
+        hLPT,
+        data,
+        NULL,
+        &dwWrite,
+        NULL);
+    if (!b)
+    {
+        obj.Set(String::New(env, "success"), false);
+        obj.Set(String::New(env, "error"), GetLastError());
+        return obj;
+    }
     obj.Set(String::New(env, "success"), true);
-    // BOOL b = WriteFile(
-    //     hLPT,
-    //     data,
-    //     NULL,
-    //     &dwWrite,
-    //     NULL);
-    // if (!b)
-    // {
-    //     // SetPrintResult(result, FALSE, GetLastError());
-    //     return obj;
-    // }
     // FlushFileBuffers(hLPT);
     // CloseHandle(hLPT);
     // SetPrintResult(result, TRUE, NULL);
