@@ -1,6 +1,12 @@
 var addon = require('bindings')('addon');
 
-console.log(addon.Write()); // 'world'
+const iconv = require('iconv-lite');
+const list = addon.GetUsbDeviceList();
+const printer = usblist.find(item => item.service === 'usbprint' || item.name === 'USB 打印支持');
+console.log(list, addon.Write(), printer); // 'world'
+
+
+
 const win32Escpos = function () {
     if (process.platform === 'win32') {
         console.log(123);
