@@ -27,6 +27,7 @@ Object Write(const CallbackInfo &info) {
     // obj.Set(String::New(env, "deviceBf"), deviceBf);
     obj.Set(String::New(env, "devicePath"), devicePath.Utf8Value().c_str());
     obj.Set(String::New(env, "data"), data);
+    obj.Set(String::New(env, "data.ByteLength"), data.ByteLength());
     obj.Set(String::New(env, "test"), "Hello Write Object");
 
     DWORD dwWrite;
@@ -42,7 +43,7 @@ Object Write(const CallbackInfo &info) {
     BOOL b = WriteFile(
         hLPT,
         data,
-        NULL,
+        (DWORD)data.ByteLength(),
         &dwWrite,
         NULL);
     if (!b)
