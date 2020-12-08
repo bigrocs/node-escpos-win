@@ -20,7 +20,7 @@ Object Write(const CallbackInfo &info) {
         TypeError::New(env, "the second argument must be a buffer").ThrowAsJavaScriptException();
         return obj;
     }
-    String devicePath = info[0].As<String>()->Utf8Value();
+    std::String devicePath = info[0].As<String>()->Utf8Value();
     ArrayBuffer data = info[1].As<ArrayBuffer>();
     // char *deviceBf = (char *)malloc(devicePath->Utf8Length() + 1);
 
