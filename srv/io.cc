@@ -27,7 +27,7 @@ Object Write(const CallbackInfo &info) {
     obj.Set(String::New(env, "data"), data);
     obj.Set(String::New(env, "test"), "Hello Write Object");
 
-    DWORD dwWrite;
+    // DWORD dwWrite;
     HANDLE hLPT = CreateFile(devicePath, GENERIC_READ | GENERIC_WRITE, 0, NULL,
                              OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
 
@@ -36,19 +36,19 @@ Object Write(const CallbackInfo &info) {
         // SetPrintResult(result, FALSE, GetLastError());
         return obj;
     }
-    BOOL b = WriteFile(
-        hLPT,
-        data,
-        NULL,
-        &dwWrite,
-        NULL);
-    if (!b)
-    {
-        // SetPrintResult(result, FALSE, GetLastError());
-        return obj;
-    }
-    FlushFileBuffers(hLPT);
-    CloseHandle(hLPT);
+    // BOOL b = WriteFile(
+    //     hLPT,
+    //     data,
+    //     NULL,
+    //     &dwWrite,
+    //     NULL);
+    // if (!b)
+    // {
+    //     // SetPrintResult(result, FALSE, GetLastError());
+    //     return obj;
+    // }
+    // FlushFileBuffers(hLPT);
+    // CloseHandle(hLPT);
     // SetPrintResult(result, TRUE, NULL);
 
     return obj;
