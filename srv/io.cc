@@ -21,7 +21,7 @@ Object Write(const CallbackInfo &info) {
         return obj;
     }
     String devicePath = info[0].As<String>();
-    Buffer<uint16_t> data = info[1].As<Buffer<uint16_t>>();
+    Buffer<char> data = info[1].As<Buffer<char>>();
 
     obj.Set(String::New(env, "devicePath"), devicePath.Utf8Value().c_str());
     obj.Set(String::New(env, "data"), data);
