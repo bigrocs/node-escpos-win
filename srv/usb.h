@@ -9,19 +9,19 @@
 using namespace Napi;
 
 struct List {
-    string name;
-    string service;
-    string manufacturer;
-    string location;
-    string path;
+    char name;
+    char service;
+    char manufacturer;
+    char location;
+    char path;
 };
-struct Result
-{
-    int number;
-    bool success;
-    DWORD err;
-    List[] list;
-} result;
+// struct Result
+// {
+//     int number;
+//     bool success;
+//     DWORD err;
+//     List[] list;
+// } result;
 
 void GetUsbDeviceList();
 string Utf8Encode(const string &str);
