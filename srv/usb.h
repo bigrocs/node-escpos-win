@@ -1,6 +1,7 @@
 #include <napi.h>
 #include <windows.h>
 #include <string>
+#include <list>
 #include <winioctl.h>
 #include <initguid.h>
 #include <setupapi.h>
