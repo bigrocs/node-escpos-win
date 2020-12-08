@@ -18,7 +18,7 @@
         error:'This operating system is not supported by this application' // 错误提示,
     }
 */
-Object GetUsbDeviceList(const CallbackInfo &info){
+Object GetUsbDeviceList(const CallbackInfo &info) {
     HDEVINFO hDevInfoSet;
     SP_DEVINFO_DATA spDevInfoData;
 
