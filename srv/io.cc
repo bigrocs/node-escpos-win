@@ -21,13 +21,10 @@ Object Write(const CallbackInfo &info) {
         return obj;
     }
     String devicePath = info[0].As<String>();
-    ArrayBuffer arg1 = info[1].As<ArrayBuffer>();
+    ArrayBuffer data = info[1].As<ArrayBuffer>();
 
-
-
-
-    obj.Set(String::New(env, "arg0"), arg0);
-    obj.Set(String::New(env, "arg1"), arg1);
+    obj.Set(String::New(env, "devicePath"), devicePath);
+    obj.Set(String::New(env, "data"), data);
     obj.Set(String::New(env, "test"), "Hello Write Object");
 
     DWORD dwWrite;
@@ -41,7 +38,7 @@ Object Write(const CallbackInfo &info) {
     }
     BOOL b = WriteFile(
         hLPT,
-        arg1,
+        data,
         (DWORD)size,
         &dwWrite,
         NULL);
