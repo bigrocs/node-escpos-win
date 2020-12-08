@@ -33,11 +33,13 @@ Object Write(const CallbackInfo &info) {
     HANDLE hLPT = CreateFile(devicePath.Utf8Value().c_str(), GENERIC_READ | GENERIC_WRITE, 0, NULL,
                              OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
 
-    // if (hLPT == INVALID_HANDLE_VALUE)
-    // {
-    //     // SetPrintResult(result, FALSE, GetLastError());
-    //     return obj;
-    // }
+    if (hLPT == INVALID_HANDLE_VALUE)
+    {
+        obj.Set(String::New(env, "success"), false);
+        obj.Set(String::New(env, "error"), GetLastError());
+        return obj;
+    }
+    obj.Set(String::New(env, "success"), true);
     // BOOL b = WriteFile(
     //     hLPT,
     //     data,
