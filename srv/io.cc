@@ -20,11 +20,39 @@ Object Write(const CallbackInfo &info) {
         TypeError::New(env, "the second argument must be a buffer").ThrowAsJavaScriptException();
         return obj;
     }
-    String arg0 = info[0].As<String>();
+    String devicePath = info[0].As<String>();
     ArrayBuffer arg1 = info[1].As<ArrayBuffer>();
+
+
+
 
     obj.Set(String::New(env, "arg0"), arg0);
     obj.Set(String::New(env, "arg1"), arg1);
     obj.Set(String::New(env, "test"), "Hello Write Object");
+
+    DWORD dwWrite;
+    HANDLE hLPT = CreateFile(devicePath.c_str(), GENERIC_READ | GENERIC_WRITE, 0, NULL,
+                             OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
+
+    if (hLPT == INVALID_HANDLE_VALUE)
+    {
+        // SetPrintResult(result, FALSE, GetLastError());
+        return obj;
+    }
+    BOOL b = WriteFile(
+        hLPT,
+        arg1,
+        (DWORD)size,
+        &dwWrite,
+        NULL);
+    if (!b)
+    {
+        // SetPrintResult(result, FALSE, GetLastError());
+        return obj;
+    }
+    FlushFileBuffers(hLPT);
+    CloseHandle(hLPT);
+    // SetPrintResult(result, TRUE, NULL);
+
     return obj;
 }
