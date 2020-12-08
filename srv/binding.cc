@@ -1,6 +1,6 @@
 #include <napi.h>
 #include "usb.h"
-#include "io.h"
+// #include "io.h"
 
 using namespace Napi;
 
@@ -15,8 +15,8 @@ Object Init(Env env, Object exports) {
               Function::New(env, Hello));
   exports.Set(String::New(env, "GetUsbDeviceList"),
               Function::New(env, GetUsbDeviceList));
-  exports.Set(String::New(env, "Write"),
-              Function::New(env, Write));
+  // exports.Set(String::New(env, "Write"),
+  //             Function::New(env, Write));
   return exports;
 }
 
