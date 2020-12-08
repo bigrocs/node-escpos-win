@@ -21,6 +21,7 @@
     "node-addon-api": "^3.0.2"
   },
   "os": [
-    "win32"
+    "win32",
+    "darwin"
   ]
 }

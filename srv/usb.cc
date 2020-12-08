@@ -20,9 +20,17 @@
 // */
 void GetUsbDeviceList(list<DeviceInfo> &devicelist, ResultInfo &resultInfo)
 {
-    resultInfo->number = 2;
-    resultInfo->success = false;
-    resultInfo->err = 10;
+    DeviceInfo deviceinfo = {
+        "name",
+        "service",
+        "manufacturer",
+        "location",
+        "path",
+    };
+    devicelist.push_back(deviceinfo);
+
+    resultInfo.success = false;
+    resultInfo.err = 10;
 }
     // void GetUsbDeviceList()
     // {
