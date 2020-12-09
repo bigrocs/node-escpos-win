@@ -74,7 +74,7 @@ Napi::Object Print(const Napi::CallbackInfo &info)
   return obj;
 }
 
-Napi::Bool Disconnect(const Napi::CallbackInfo &info)
+Napi::Boolean Disconnect(const Napi::CallbackInfo &info)
 {
   Napi::Env env = info.Env();
   if (info.Length() < 1)
@@ -92,7 +92,7 @@ Napi::Bool Disconnect(const Napi::CallbackInfo &info)
   // 构建参数
   string devicePath = info[0].As<Napi::String>().Utf8Value();
   boll disconnectResult = DisConnectDevice(devicePath);
-  return (Napi::Bool::New(env, disconnectResult);
+  return (Napi::Boolean::New(env, disconnectResult);
 }
 
 Napi::Object Init(Napi::Env env, Napi::Object exports)
