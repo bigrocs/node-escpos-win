@@ -23,6 +23,7 @@ struct PrintResult
 };
 
 BOOL PrintRawData(string devicePath, char *meg, size_t size, PrintResult *result);
+BOOL DisConnectDevice(string devicePath);
 
 int WriteRawData(const char *str, HANDLE hPort, size_t size);
 void InitializeDevicePar(PrintDevice &device);
