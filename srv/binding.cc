@@ -80,19 +80,19 @@ Napi::Boolean Disconnect(const Napi::CallbackInfo &info)
   if (info.Length() < 1)
   {
     Napi::TypeError::New(env, "Wrong number of arguments, must be 2").ThrowAsJavaScriptException();
-    return obj;
+    return Napi::Boolean::New(env, false);
   }
 
   if (!info[0].IsString())
   {
     Napi::TypeError::New(env, "The first argument must be a string").ThrowAsJavaScriptException();
-    return obj;
+    return Napi::Boolean::New(env, false);
   }
 
   // 构建参数
   string devicePath = info[0].As<Napi::String>().Utf8Value();
-  boll disconnectResult = DisConnectDevice(devicePath);
-  return (Napi::Boolean::New(env, disconnectResult);
+  bool disconnectResult = DisConnectDevice(devicePath);
+  return Napi::Boolean::New(env, disconnectResult);
 }
 
 Napi::Object Init(Napi::Env env, Napi::Object exports)
