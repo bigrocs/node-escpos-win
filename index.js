@@ -6,11 +6,11 @@ const win32Escpos = function () {
             GetUsbDeviceList() {
                 return addon.GetUsbDeviceList();
             },
-            Print() {
-                return addon.Print();
+            Print(path, content) {
+                return addon.Print(path, content);
             },
             Disconnect() {
-                return addon.Disconnect();
+                return addon.Disconnect(path);
             },
         }
     }
