@@ -73,13 +73,8 @@ Napi::Object Print(const Napi::CallbackInfo &info)
   PrintResult *printResult = (PrintResult *)malloc(sizeof(PrintResult));
   PrintRawData(devicePath, bufData, bufferLength, printResult);
 
-  obj.Set(Napi::String::New(env, "bufferLength"), bufferLength);
-  obj.Set(Napi::String::New(env, "bufData"), bufData);
-
-  obj.Set(Napi::String::New(env, "devicePath"), devicePath.c_str());
-  obj.Set(Napi::String::New(env, "data"), data);
-  obj.Set(Napi::String::New(env, "data.length"), data.Length());
-  obj.Set(Napi::String::New(env, "test"), "Hello Write Object");
+  obj.Set(Napi::String::New(env, "success"), printResult.success);
+  obj.Set(Napi::String::New(env, "err"), printResult.err);
   // 释放内存
   free(printResult);
   return obj;
