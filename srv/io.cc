@@ -60,12 +60,9 @@ BOOL PrintRawData(string devicePath, char *meg, size_t size, PrintResult *result
         handlerInfo.isInit = FALSE;
         return FALSE;
     }
-    printf("write file result is %d", r);
     int err = GetLastError();
-    printf("getlast err is %d", err);
-    // CloseHandle(handle);
+    CloseHandle(handle);
     SetPrintResult(result, TRUE, err);
-    // Sleep(2000);
     return TRUE;
 }
 
