@@ -1,6 +1,6 @@
 #include <napi.h>
 #include "usb.h"
-// #include "io.h"
+#include "io.h"
 
 using namespace std;
 
@@ -44,14 +44,54 @@ Napi::Object UsbDeviceList(const Napi::CallbackInfo &info)
   return obj;
 }
 
+Napi::Object Print(const Napi::CallbackInfo &info)
+{
+  Napi::Env env = info.Env();
+  Napi::Object obj = Napi::Object::New(env); // 初始化函数返回数据对象
+  if (info.Length() < 2)
+  {
+    Napi::TypeError::New(env, "Wrong number of arguments, must be 2").ThrowAsJavaScriptException();
+    return obj;
+  }
+
+  if (!info[0].IsString())
+  {
+    Napi::TypeError::New(env, "The first argument must be a string").ThrowAsJavaScriptException();
+    return obj;
+  }
+
+  if (!info[1].IsObject())
+  {
+    Napi::TypeError::New(env, "the second argument must be a buffer").ThrowAsJavaScriptException();
+    return obj;
+  }
+  // 构建参数
+  string devicePath = info[0].As<Napi::String>().Utf8Value();
+  Napi::Buffer<char> data = info[1].As<Napi::Buffer<char>>();
+  size_t bufferLength = data.Length();
+  char *bufData = data.Data();
+  PrintResult *printResult = (PrintResult *)malloc(sizeof(PrintResult));
+  PrintRawData(devicePath, bufData, bufferLength, printResult);
+
+  obj.Set(Napi::String::New(env, "bufferLength"), bufferLength);
+  obj.Set(Napi::String::New(env, "bufData"), bufData);
+
+  obj.Set(Napi::String::New(env, "devicePath"), devicePath.c_str());
+  obj.Set(Napi::String::New(env, "data"), data);
+  obj.Set(Napi::String::New(env, "data.length"), data.Length());
+  obj.Set(Napi::String::New(env, "test"), "Hello Write Object");
+  // 释放内存
+  free(printResult);
+  return obj;
+}
 Napi::Object Init(Napi::Env env, Napi::Object exports)
 {
   exports.Set(Napi::String::New(env, "hello"),
               Napi::Function::New(env, Hello));
   exports.Set(Napi::String::New(env, "GetUsbDeviceList"),
               Napi::Function::New(env, UsbDeviceList));
-  // exports.Set(Napi::String::New(env, "Write"),
-  //             Napi::Function::New(env, Write));
+  exports.Set(Napi::String::New(env, "Print"),
+              Napi::Function::New(env, Print));
   return exports;
 }
 
