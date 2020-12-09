@@ -9,31 +9,23 @@ typedef pair<string, HandlerInfo> HandlerInfo_Pair;
 
 map<string, HandlerInfo> handlerMap;
 
-void DisConnect(const FunctionCallbackInfo<Value> &args)
+BOOL DisConnectDevice(string devicePath)
 {
-    Isolate *isolate = args.GetIsolate();
-    if (args.Length() < 1)
+    HANDLE handle;
+    HandlerInfo handlerInfo = HandlerInfo();
+    if ((handlerMap.size()) == 0)
     {
-        isolate->ThrowException(Exception::Error(String::NewFromUtf8(isolate, "pls call thisFunction like this DisconnectDevice(devicePath: string)")));
-        return;
+        return FALSE;
     }
-    if (!args[0]->IsString())
+    handlerInfo = handlerMap[devicePath];
+    if (handlerInfo.isInit)
     {
-        isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "the argument must be a string")));
-        return;
+        BOOL ret = CloseHandle(handlerInfo.handle);
+        handlerInfo.isInit = !ret;
+        handlerMap.erase(devicePath);
+        return ret;
     }
-    Local<String> devicePath = args[0]->ToString();
-    const int len = devicePath->Utf8Length();
-
-    char *devicePathBf = (char *)malloc(len + 1);
-    if (nullptr == devicePathBf)
-    {
-        return;
-    }
-    devicePath->WriteUtf8(devicePathBf, len);
-    devicePathBf[len] = 0;
-    BOOL disconnectResult = DisConnectDevice(devicePathBf);
-    args.GetReturnValue().Set(Boolean::New(isolate, disconnectResult));
+    return FALSE;
 }
 
 BOOL PrintRawData(string devicePath, char *meg, size_t size, PrintResult *result)
@@ -142,15 +134,15 @@ HANDLE InitPort(PrintDevice &device)
         m_hDataReady = CreateEvent(NULL, FALSE, FALSE, NULL);
 
         //初始化打印ESC @
-        DWORD iBytesLength;
-        const char *chInitCode = "\x0D\x1B\x40";
-        WriteFile(handle, chInitCode, (DWORD)3L, &iBytesLength, NULL);
+        // DWORD iBytesLength;
+        // const char *chInitCode = "\x0D\x1B\x40";
+        // WriteFile(handle, chInitCode, (DWORD)3L, &iBytesLength, NULL);
 
-        if (!WriteFile(handle, chInitCode, (DWORD)3L, &iBytesLength, NULL))
-        {
-            cout << "last err is " << GetLastError() << endl;
-            return FALSE;
-        }
+        // if (!WriteFile(handle, chInitCode, (DWORD)3L, &iBytesLength, NULL))
+        // {
+        //     cout << "last err is " << GetLastError() << endl;
+        //     return FALSE;
+        // }
     }
 
     return handle;
