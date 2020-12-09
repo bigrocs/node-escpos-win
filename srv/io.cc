@@ -61,7 +61,7 @@ BOOL PrintRawData(string devicePath, char *meg, size_t size, PrintResult *result
         return FALSE;
     }
     int err = GetLastError();
-    CloseHandle(handle);
+    // CloseHandle(handle);
     SetPrintResult(result, TRUE, err);
     return TRUE;
 }
