@@ -4,12 +4,6 @@
 
 using namespace std;
 
-Napi::String Hello(const Napi::CallbackInfo &info)
-{
-  Napi::Env env = info.Env();
-  return Napi::String::New(env, "Hello World");
-}
-
 Napi::Object UsbDeviceList(const Napi::CallbackInfo &info)
 {
   Napi::Env env = info.Env();
@@ -79,14 +73,36 @@ Napi::Object Print(const Napi::CallbackInfo &info)
   free(printResult);
   return obj;
 }
+
+Napi::Bool Disconnect(const Napi::CallbackInfo &info)
+{
+  Napi::Env env = info.Env();
+  if (info.Length() < 1)
+  {
+    Napi::TypeError::New(env, "Wrong number of arguments, must be 2").ThrowAsJavaScriptException();
+    return obj;
+  }
+
+  if (!info[0].IsString())
+  {
+    Napi::TypeError::New(env, "The first argument must be a string").ThrowAsJavaScriptException();
+    return obj;
+  }
+
+  // 构建参数
+  string devicePath = info[0].As<Napi::String>().Utf8Value();
+  boll disconnectResult = DisConnectDevice(devicePath);
+  return (Napi::Bool::New(env, disconnectResult);
+}
+
 Napi::Object Init(Napi::Env env, Napi::Object exports)
 {
-  exports.Set(Napi::String::New(env, "hello"),
-              Napi::Function::New(env, Hello));
   exports.Set(Napi::String::New(env, "GetUsbDeviceList"),
               Napi::Function::New(env, UsbDeviceList));
   exports.Set(Napi::String::New(env, "Print"),
               Napi::Function::New(env, Print));
+  exports.Set(Napi::String::New(env, "Disconnect"),
+              Napi::Function::New(env, Disconnect));
   return exports;
 }
 
