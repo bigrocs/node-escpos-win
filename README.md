@@ -13,7 +13,7 @@ npm install node-escpos-win --save-optional
     const escpos =require('node-escpos-win');
     const usb = escpos.GetUsbDeviceList();
     const printer = usb.list.find(item => item.service === 'usbprint' || item.name === 'USB 打印支持');
-    const content = iconv.encode("你好啊\n halo cpp!\n\n\n\n\n\n\n\n\n", 'GB18030');
+    const content = iconv.encode("你好啊\n bigrocs!\n\n\n\n\n\n\n\n\n", 'GB18030');
     console.log(1, printer); // 'world'
     const res = escpos.Print(printer.path, content);
     console.log(2, res); // 'world'
@@ -27,7 +27,7 @@ npm install node-escpos-win --save-optional
     const escpos =require('node-escpos-win');
     const usb = escpos.GetLptDeviceList();
     const printer = usb.list.find(item => item.service === 'usbprint' || item.name === 'USB 打印支持');
-    const content = iconv.encode("你好啊\n halo cpp!\n\n\n\n\n\n\n\n\n", 'GB18030');
+    const content = iconv.encode("你好啊\n bigrocs!\n\n\n\n\n\n\n\n\n", 'GB18030');
     console.log(1, printer); // 'world'
     const res = escpos.Print(printer.path, content);
     console.log(2, res); // 'world'
