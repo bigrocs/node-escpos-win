@@ -131,9 +131,9 @@ HANDLE InitPort(PrintDevice &device)
         m_hDataReady = CreateEvent(NULL, FALSE, FALSE, NULL);
 
         //初始化打印ESC @
-        // DWORD iBytesLength;
-        // const char *chInitCode = "\x0D\x1B\x40";
-        // WriteFile(handle, chInitCode, (DWORD)3L, &iBytesLength, NULL);
+        DWORD iBytesLength;
+        const char *chInitCode = "\x0D\x1B\x40";
+        WriteFile(handle, chInitCode, (DWORD)3L, &iBytesLength, NULL);
 
         // if (!WriteFile(handle, chInitCode, (DWORD)3L, &iBytesLength, NULL))
         // {
