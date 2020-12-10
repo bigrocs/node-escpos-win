@@ -9,7 +9,7 @@ const win32Escpos = function () {
             Print(path, content) {
                 return addon.Print(path, content);
             },
-            Disconnect() {
+            Disconnect(path) {
                 return addon.Disconnect(path);
             },
         }
