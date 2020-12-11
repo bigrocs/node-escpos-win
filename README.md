@@ -5,9 +5,9 @@ npm install node-escpos-win
 ---
 # 配合node-escpos 
 ```
-// 配合node-escpos 请使用这个插件
+// 配合node-escpos 请使用插件 [escpos-win](https://github.com/bigrocs/escpos-win)
 npm install escpos-win
-https://github.com/bigrocs/escpos-win
+
 ```
 #escpos native plugin for electron
 #目前只支持 windows系统
