@@ -3,7 +3,7 @@
 npm install node-escpos-win
 ```
 
-## 配合node-escpos 请使用插件  [escpos-win](https://github.com/bigrocs/escpos-win)
+## 配合 node-escpos 请使用插件  [escpos-win](https://github.com/bigrocs/escpos-win)
 ```
 npm install escpos-win
 
