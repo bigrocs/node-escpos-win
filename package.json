@@ -1,6 +1,6 @@
 {
   "name": "node-escpos-win",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "a cpp escpos plugin for nodejs and electron",
   "main": "index.js",
   "directories": {

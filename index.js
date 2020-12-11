@@ -13,18 +13,21 @@ const win32Escpos = function () {
             },
         }
     }else{
+        const err = {
+            list : [                             
+            ],
+            number : 0, //设备数量
+            error:'This operating system is not supported by this application' // 错误提示,
+        }
         return {
             GetUsbDeviceList() {
-                console.error("Only supports Windows system");
-                
+                return err;
             },
             Print(path, content) {
-                console.error("Only supports Windows system");
-                
+                return err;
             },
             Disconnect(path) {
-                console.error("Only supports Windows system");
-                
+                return err;
             },
         }
     }
