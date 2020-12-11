@@ -14,7 +14,6 @@ npm install escpos-win
 
 ```
 // usb printer
-```
     const iconv = require('iconv-lite');
     const escpos =require('node-escpos-win');
     const usb = escpos.GetUsbDeviceList();
