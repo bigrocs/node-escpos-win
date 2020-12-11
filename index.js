@@ -15,15 +15,15 @@ const win32Escpos = function () {
     }else{
         return {
             GetUsbDeviceList() {
-                console.log("Only supports Windows system");
+                console.error("Only supports Windows system");
                 
             },
             Print(path, content) {
-                console.log("Only supports Windows system");
+                console.error("Only supports Windows system");
                 
             },
             Disconnect(path) {
-                console.log("Only supports Windows system");
+                console.error("Only supports Windows system");
                 
             },
         }
