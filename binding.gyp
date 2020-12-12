@@ -16,9 +16,9 @@
           'OS=="win"',
           {
                'sources': [
-                   "srv/binding.cc",
-                   "srv/usb.cc",
-                   "srv/io.cc"
+                  #  "srv/binding.cc",
+                  #  "srv/usb.cc",
+                  #  "srv/io.cc"
                ],
                'include_dirs+':
                [

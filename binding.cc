@@ -1,5 +1,4 @@
 #include <napi.h>
-#include "stdafx.h"
 #include <windows.h>
 #include <iostream>
 using namespace std;
