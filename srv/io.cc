@@ -53,7 +53,6 @@ BOOL PrintRawData(string devicePath, char *meg, size_t size, PrintResult *result
     }
 
     BOOL r = WriteRawData(meg, handlerInfo.handle, size);
-    cout << "last 12 " << r << endl;
     if (!r)
     {
         SetPrintResult(result, FALSE, GetLastError());
@@ -91,9 +90,7 @@ HANDLE InitPort(PrintDevice &device)
     else
     {
         //设置端口缓冲
-        int a = SetupComm(handle, 10240, 10240);
-        cout << "last 1 " << a << endl;
-        cout << "last SetupComm err is " << GetLastError() << endl;
+        int a = SetupComm(handle, 1024, 1024);
         // 设定通讯端口超时参数
         COMMTIMEOUTS tmouts;
         tmouts.ReadIntervalTimeout = 100;
@@ -102,7 +99,6 @@ HANDLE InitPort(PrintDevice &device)
         tmouts.WriteTotalTimeoutConstant = 100;
         tmouts.WriteTotalTimeoutMultiplier = 100;
         int b = SetCommTimeouts(handle, &tmouts);
-        cout << "last b " << b << endl;
 
         //设定通讯端口通讯参数
         DCB dcb;
@@ -144,7 +140,6 @@ HANDLE InitPort(PrintDevice &device)
         //     return FALSE;
         // }
     }
-    cout << "last 2 " << TRUE << endl;
     return handle;
 }
 void SetPrintResult(PrintResult *result, BOOL success, DWORD errCode)
@@ -157,7 +152,6 @@ typedef _OVERLAPPED* LPOVERLAPPED;
 
 BOOL WriteRawData(const char *str, HANDLE hPort, size_t size)
 {
-    cout << "last 11 " << size << endl;
     DWORD dwWrite;
     return WriteFile(hPort, str, (DWORD)size, &dwWrite, NULL);
 }
