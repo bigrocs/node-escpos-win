@@ -1,37 +1,31 @@
 #include <napi.h>
-
-#include <chrono>
-#include <thread>
+#include "stdafx.h"
+#include <windows.h>
+#include <iostream>
 using namespace std;
 
-class EchoWorker : public Napi::AsyncWorker {
-    public:
-        EchoWorker(Napi::Function& callback, string& echo)
-        : AsyncWorker(callback), echo(echo) {}
-
-        ~EchoWorker() {}
-    // This code will be executed on the worker thread
-    void Execute() override {
-        echo = echo+"000";
-        // Need to simulate cpu heavy task
-        this_thread::sleep_for(chrono::seconds(1));
+DWORD WINAPI Fun(LPVOID lpParamter)
+{
+    for (int i = 0; i < 10; i++)
+    {
+        cout << "A Thread Fun Display!" << endl;
+        Sleep(200);
     }
 
-    void OnOK() override {
-        // Napi::HandleScope scope(Env());
-        Callback().Call({Env().Null(), Napi::String::New(Env(), echo)});
-    }
-
-    private:
-        string echo;
-};
+    return 0L;
+}
 
 Napi::Value Echo(const Napi::CallbackInfo& info) {
     // You need to validate the arguments here.
     Napi::Function cb = info[1].As<Napi::Function>();
     std::string in = info[0].As<Napi::String>();
-    EchoWorker* wk = new EchoWorker(cb, in);
-    wk->Queue();
+    HANDLE hThread = CreateThread(NULL, 0, Fun, NULL, 0, NULL);
+    CloseHandle(hThread);
+    for (int i = 0; i < 10; i++)
+    {
+        cout << "Main Thread Display!" << endl;
+        Sleep(500);
+    }
     return info.Env().Undefined();
 }
 
