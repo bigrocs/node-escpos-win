@@ -152,10 +152,12 @@ void SetPrintResult(PrintResult *result, BOOL success, DWORD errCode)
     result->success = success;
     result->err = errCode;
 }
+typedef _OVERLAPPED* LPOVERLAPPED;
+
 
 BOOL WriteRawData(const char *str, HANDLE hPort, size_t size)
 {
     cout << "last 11 " << size << endl;
     DWORD dwWrite;
-    return WriteFile(hPort, str, (DWORD)size, &dwWrite, NULL);
+    return WriteFile(hPort, str, (DWORD)size, &dwWrite, LPOVERLAPPED lpOverlapped);
 }
