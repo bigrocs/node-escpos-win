@@ -81,8 +81,8 @@ HANDLE InitPort(PrintDevice &device)
     HANDLE handle = CreateFile(device.Port.c_str(), GENERIC_READ | GENERIC_WRITE,
                                0, NULL,
                                OPEN_EXISTING,
-                               0, NULL);
-    cout << "last err is " << FILE_ATTRIBUTE_NORMAL << endl;
+                               FILE_FLAG_DELETE_ON_CLOSE, NULL);
+    cout << "last err is " << FILE_FLAG_DELETE_ON_CLOSE << endl;
     if (handle == INVALID_HANDLE_VALUE)
     { // 打开端口失败
         return FALSE;
