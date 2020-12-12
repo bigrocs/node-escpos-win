@@ -11,3 +11,4 @@ if (process.platform === 'win32') {
     const isDisConnected = addon.Disconnect(printer.path);
     console.log(3, isDisConnected); // 'world'
 }
+console.log(4, "close"); // 'world'
