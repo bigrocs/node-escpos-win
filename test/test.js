@@ -1,5 +1,5 @@
 var addon = require('bindings')('addon');
-for (let index = 0; index < 100; index++) {
+for (let index = 0; index < 1000000; index++) {
     if (process.platform === 'win32') {
         const iconv = require('iconv-lite');
         const usb = addon.GetUsbDeviceList();
