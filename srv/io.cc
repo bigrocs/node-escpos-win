@@ -53,6 +53,7 @@ BOOL PrintRawData(string devicePath, char *meg, size_t size, PrintResult *result
     }
 
     BOOL r = WriteRawData(meg, handlerInfo.handle, size);
+    cout << "last 12 " << r << endl;
     if (!r)
     {
         SetPrintResult(result, FALSE, GetLastError());
@@ -91,7 +92,7 @@ HANDLE InitPort(PrintDevice &device)
     {
         //设置端口缓冲
         int a = SetupComm(handle, 1024, 1024);
-        cout << "last err is " << a << endl;
+        cout << "last 1 " << a << endl;
         // 设定通讯端口超时参数
         COMMTIMEOUTS tmouts;
         tmouts.ReadIntervalTimeout = 100;
@@ -141,7 +142,7 @@ HANDLE InitPort(PrintDevice &device)
         //     return FALSE;
         // }
     }
-
+    cout << "last 2 " << TRUE << endl;
     return handle;
 }
 void SetPrintResult(PrintResult *result, BOOL success, DWORD errCode)
@@ -152,6 +153,7 @@ void SetPrintResult(PrintResult *result, BOOL success, DWORD errCode)
 
 BOOL WriteRawData(const char *str, HANDLE hPort, size_t size)
 {
+    cout << "last 11 " << size << endl;
     DWORD dwWrite;
     return WriteFile(hPort, str, (DWORD)size, &dwWrite, NULL);
 }
