@@ -86,8 +86,8 @@ HANDLE InitPort(PrintDevice &device)
     { // 打开端口失败
         return FALSE;
     }
-    else
-    {
+    // else
+    // {
         // //设置端口缓冲
         // SetupComm(handle, 1024, 1024);
         // // 设定通讯端口超时参数
@@ -138,7 +138,7 @@ HANDLE InitPort(PrintDevice &device)
         //     cout << "last err is " << GetLastError() << endl;
         //     return FALSE;
         // }
-    }
+    // }
     return handle;
 }
 void SetPrintResult(PrintResult *result, BOOL success, DWORD errCode)
