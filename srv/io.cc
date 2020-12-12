@@ -82,7 +82,7 @@ HANDLE InitPort(PrintDevice &device)
     HANDLE handle = CreateFile(device.Port.c_str(), GENERIC_READ | GENERIC_WRITE,
                                0, NULL,
                                OPEN_EXISTING,
-                               FILE_FLAG_OVERLAPPED, NULL);
+                               FILE_ATTRIBUTE_NORMAL, NULL);
 
     if (handle == INVALID_HANDLE_VALUE)
     { // 打开端口失败
@@ -159,6 +159,5 @@ BOOL WriteRawData(const char *str, HANDLE hPort, size_t size)
 {
     cout << "last 11 " << size << endl;
     DWORD dwWrite;
-    LPOVERLAPPED lpOverlapped;
-    return WriteFile(hPort, str, (DWORD)size, &dwWrite, lpOverlapped);
+    return WriteFile(hPort, str, (DWORD)size, &dwWrite, NULL);
 }
