@@ -160,5 +160,5 @@ BOOL WriteRawData(const char *str, HANDLE hPort, size_t size)
     cout << "last 11 " << size << endl;
     DWORD dwWrite;
     LPOVERLAPPED lpOverlapped;
-    return WriteFile(hPort, str, (DWORD)size, &dwWrite, LPOVERLAPPED lpOverlapped);
+    return WriteFile(hPort, str, (DWORD)size, &dwWrite, lpOverlapped);
 }
