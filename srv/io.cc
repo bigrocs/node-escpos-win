@@ -90,8 +90,8 @@ HANDLE InitPort(PrintDevice &device)
     else
     {
         //设置端口缓冲
-        SetupComm(handle, 1024, 1024);
-
+        int a = SetupComm(handle, 1024, 1024);
+        cout << "last err is " << a << endl;
         // 设定通讯端口超时参数
         COMMTIMEOUTS tmouts;
         tmouts.ReadIntervalTimeout = 100;
