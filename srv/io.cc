@@ -82,7 +82,7 @@ HANDLE InitPort(PrintDevice &device)
     HANDLE handle = CreateFile(device.Port.c_str(), GENERIC_READ | GENERIC_WRITE,
                                0, NULL,
                                OPEN_EXISTING,
-                               FILE_ATTRIBUTE_NORMAL, NULL);
+                               FILE_FLAG_OVERLAPPED, NULL);
 
     if (handle == INVALID_HANDLE_VALUE)
     { // 打开端口失败
