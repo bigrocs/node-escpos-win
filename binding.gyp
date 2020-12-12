@@ -3,7 +3,7 @@
     {
       "target_name": "addon",
       "sources": [
-          "binding.cc",
+          # "binding.cc",
       ],
       "cflags!": ["-fno-exceptions"],
       "cflags_cc!": ["-fno-exceptions"],
@@ -16,9 +16,9 @@
           'OS=="win"',
           {
                'sources': [
-                  #  "srv/binding.cc",
-                  #  "srv/usb.cc",
-                  #  "srv/io.cc"
+                   "srv/binding.cc",
+                   "srv/usb.cc",
+                   "srv/io.cc"
                ],
                'include_dirs+':
                [
