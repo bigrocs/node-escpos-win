@@ -78,7 +78,7 @@ void InitializeDevicePar(PrintDevice &device)
 
 HANDLE InitPort(PrintDevice &device)
 {
-    HANDLE handle = CreateFile(device.Port.c_str(), GENERIC_READ | GENERIC_WRITE,
+    HANDLE handle = CreateFile(device.Port.c_str(), FILE_SHARE_READ|FILE_SHARE_WRITE,
                                0, NULL,
                                OPEN_EXISTING,
                                0, NULL);
