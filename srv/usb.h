@@ -6,6 +6,8 @@
 #include <initguid.h>
 #include <setupapi.h>
 #include <usbiodef.h>
+#include <devguid.h>
+#include <ntddpar.h>
 #pragma comment(lib, "setupapi.lib")
 
 using namespace std;
