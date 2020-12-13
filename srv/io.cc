@@ -25,6 +25,7 @@ cout << "last err is " << devicePath.c_str() << endl;
 		(DWORD)size,
 		&dwWrite,
 		NULL);
+        cout << "last err b " << b << endl;
 	if (!b) {
 		SetPrintResult(result, FALSE, GetLastError());
 		return FALSE;
