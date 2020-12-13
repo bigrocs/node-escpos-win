@@ -62,7 +62,6 @@ void GetDeviceList(list<DeviceInfo> &devicelist, string deviceType, ResultInfo &
         bResult = ::SetupDiEnumDeviceInfo(hDevInfoSet,     // 设备信息集句柄
                                           (ULONG)nCount,   // 设备信息集里的设备序号
                                           &spDevInfoData); // 设备接口信息
-       cout << "last err 1 " << bResult << endl;
         if (bResult)
         {
             DWORD DataT;
@@ -70,12 +69,10 @@ void GetDeviceList(list<DeviceInfo> &devicelist, string deviceType, ResultInfo &
             DWORD nSize = 0;
             if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_DEVICEDESC, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
-                cout << "last err 4 " << buf << endl;
                 deviceinfo.name = Utf8Encode(buf).c_str();
             }
             else if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_FRIENDLYNAME, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
-                cout << "last err 5 " << buf << endl;
                 deviceinfo.name = Utf8Encode(buf).c_str();
             }
             if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_SERVICE, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
@@ -100,7 +97,6 @@ void GetDeviceList(list<DeviceInfo> &devicelist, string deviceType, ResultInfo &
                                                 (ULONG)nCount,                         // 设备信息集里的设备序号
                                                 &ifdata);
         if (bResult){
-            cout << "last err 2 " << bResult << endl;
             // 取得该设备接口的细节(设备路径)
             bResult = SetupDiGetInterfaceDeviceDetail(hDevInfoSet,           // 设备信息集句柄
                                                       &ifdata,               // 设备接口信息
@@ -110,7 +106,6 @@ void GetDeviceList(list<DeviceInfo> &devicelist, string deviceType, ResultInfo &
                                                       NULL);                 // 不需额外的设备描述
             if (bResult)
             {
-                cout << "last err 3 " << bResult << endl;
                 deviceinfo.path = pDetail->DevicePath;
             }
         }
