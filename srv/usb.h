@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <string>
 #include <list>
+#include <iostream>
 #include <winioctl.h>
 #include <initguid.h>
 #include <setupapi.h>
