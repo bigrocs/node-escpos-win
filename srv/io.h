@@ -22,6 +22,7 @@ struct PrintResult
     DWORD err;
 };
 
+BOOL PrintRawDataByLpt(string devicePath, char *meg, size_t size, PrintResult *result);
 BOOL PrintRawData(string devicePath, char *meg, size_t size, PrintResult *result);
 BOOL DisConnectDevice(string devicePath);
 

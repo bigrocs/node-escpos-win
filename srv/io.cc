@@ -9,6 +9,32 @@ typedef pair<string, HandlerInfo> HandlerInfo_Pair;
 
 map<string, HandlerInfo> handlerMap;
 
+BOOL PrintRawDataByLpt(string devicePath, char*  meg, size_t size, PrintResult *result)
+{
+	DWORD dwWrite;
+	HANDLE hLPT = CreateFile(devicePath.c_str(), GENERIC_READ | GENERIC_WRITE, 0, NULL,
+		OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
+
+	if (hLPT == INVALID_HANDLE_VALUE) {
+		SetPrintResult(result, FALSE, GetLastError());
+		return FALSE;
+	}
+	BOOL b = WriteFile(
+		hLPT,
+		meg,
+		(DWORD)size,
+		&dwWrite,
+		NULL);
+	if (!b) {
+		SetPrintResult(result, FALSE, GetLastError());
+		return FALSE;
+	}
+	FlushFileBuffers(hLPT);
+	CloseHandle(hLPT);
+	SetPrintResult(result, TRUE, NULL);
+	return TRUE;
+}
+
 BOOL DisConnectDevice(string devicePath)
 {
     HANDLE handle;
