@@ -2,8 +2,8 @@ const win32Escpos = function () {
     if (process.platform === 'win32') {
         var addon = require('bindings')('addon');
         return {
-            GetUsbDeviceList() {
-                return addon.GetUsbDeviceList();
+            GeteviceList(type) {
+                return addon.GeteviceList(type);
             },
             Print(path, content) {
                 return addon.Print(path, content);
@@ -20,7 +20,7 @@ const win32Escpos = function () {
             error:'This operating system is not supported by this application' // 错误提示,
         }
         return {
-            GetUsbDeviceList() {
+            GeteviceList(type) {
                 return err;
             },
             Print(path, content) {
