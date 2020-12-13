@@ -1,4 +1,5 @@
 #include <napi.h>
+#include <regex>
 #include "usb.h"
 #include "io.h"
 
