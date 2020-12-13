@@ -14,7 +14,7 @@ BOOL PrintRawDataByLpt(string devicePath, char*  meg, size_t size, PrintResult *
 	DWORD dwWrite;
 	HANDLE hLPT = CreateFile(devicePath.c_str(), GENERIC_READ | GENERIC_WRITE, 0, NULL,
 		OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
-
+cout << "last err is " << devicePath.c_str() << endl;
 	if (hLPT == INVALID_HANDLE_VALUE) {
 		SetPrintResult(result, FALSE, GetLastError());
 		return FALSE;
