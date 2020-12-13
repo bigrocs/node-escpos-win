@@ -2,8 +2,8 @@ const win32Escpos = function () {
     if (process.platform === 'win32') {
         var addon = require('bindings')('addon');
         return {
-            GeteviceList(type) {
-                return addon.GeteviceList(type);
+            GetDeviceList(type) {
+                return addon.GetDeviceList(type);
             },
             Print(path, content) {
                 return addon.Print(path, content);
@@ -20,7 +20,7 @@ const win32Escpos = function () {
             error:'This operating system is not supported by this application' // 错误提示,
         }
         return {
-            GeteviceList(type) {
+            GetDeviceList(type) {
                 return err;
             },
             Print(path, content) {
