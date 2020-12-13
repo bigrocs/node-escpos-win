@@ -96,7 +96,7 @@ void GetDeviceList(list<DeviceInfo> &devicelist, string deviceType, ResultInfo &
         // 枚举符合该GUID的设备接口
         bResult = ::SetupDiEnumDeviceInterfaces(hDevInfoSet,                           // 设备信息集句柄
                                                 NULL,                                  // 不需额外的设备描述
-                                                (LPGUID)&GUID_DEVINTERFACE_USB_DEVICE, // GUID
+                                                (LPGUID)&guid, // GUID
                                                 (ULONG)nCount,                         // 设备信息集里的设备序号
                                                 &ifdata);
         if (bResult){
