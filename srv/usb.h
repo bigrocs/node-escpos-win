@@ -24,5 +24,5 @@ struct ResultInfo
     string err;
 };
 
-void GetUsbDeviceList(list<DeviceInfo> &devicelist, ResultInfo &resultInfo);
+void GetDeviceList(list<DeviceInfo> &devicelist, string deviceType, ResultInfo &resultInfo);
 string Utf8Encode(const string &str);

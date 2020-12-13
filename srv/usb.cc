@@ -18,16 +18,23 @@
 //         error:'This operating system is not supported by this application' // 错误提示,
 //     }
 // */
-void GetUsbDeviceList(list<DeviceInfo> &devicelist, ResultInfo &resultInfo)
+void GetDeviceList(list<DeviceInfo> &devicelist, string deviceType, ResultInfo &resultInfo)
 {
     HDEVINFO hDevInfoSet;
     SP_DEVINFO_DATA spDevInfoData;
 
     PSP_DEVICE_INTERFACE_DETAIL_DATA pDetail;
     SP_DEVICE_INTERFACE_DATA ifdata;
-
+    GUID guid;
+    guid = GUID_DEVINTERFACE_USB_DEVICE; // 默认USB
+    if(deviceType == "COM"){
+        guid = GUID_DEVINTERFACE_COMPORT;
+    }
+    if(deviceType == "LPT"){
+        guid = GUID_DEVINTERFACE_PARCLASS;
+    }
     // 取得一个该GUID相关的设备信息集句柄
-    hDevInfoSet = ::SetupDiGetClassDevs((LPGUID)&GUID_DEVINTERFACE_USB_DEVICE,  // class GUID USB
+    hDevInfoSet = ::SetupDiGetClassDevs((LPGUID)&guid,  // class GUID USB
                                         NULL,                                   // 无关键字
                                         NULL,                                   // 不指定父窗口句柄
                                         DIGCF_PRESENT | DIGCF_DEVICEINTERFACE); // 目前存在的设备

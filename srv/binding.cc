@@ -4,16 +4,31 @@
 
 using namespace std;
 
-Napi::Object UsbDeviceList(const Napi::CallbackInfo &info)
+Napi::Object DeviceList(const Napi::CallbackInfo &info)
 {
   Napi::Env env = info.Env();
+  if (info.Length() < 1)
+  {
+    Napi::TypeError::New(env, "Wrong number of arguments, must be 2").ThrowAsJavaScriptException();
+    return Napi::Boolean::New(env, false);
+  }
+
+  if (!info[0].IsString())
+  {
+    Napi::TypeError::New(env, "The first argument must be a string").ThrowAsJavaScriptException();
+    return Napi::Boolean::New(env, false);
+  }
+
+  // 构建参数
+  string deviceType = info[0].As<Napi::String>().Utf8Value();
+
   Napi::Object obj = Napi::Object::New(env); // 初始化函数返回数据对象
 
   // 读取usb设备列表
   list<DeviceInfo>::iterator itor;
   list<DeviceInfo> deviceList;
   ResultInfo resultInfo;
-  GetUsbDeviceList(deviceList, resultInfo);
+  GetDeviceList(deviceList, deviceType, resultInfo);
   // 分配获取数据
   Napi::Array list = Napi::Array::New(env);
   itor = deviceList.begin();
@@ -97,8 +112,8 @@ Napi::Boolean Disconnect(const Napi::CallbackInfo &info)
 
 Napi::Object Init(Napi::Env env, Napi::Object exports)
 {
-  exports.Set(Napi::String::New(env, "GetUsbDeviceList"),
-              Napi::Function::New(env, UsbDeviceList));
+  exports.Set(Napi::String::New(env, "GetDeviceList"),
+              Napi::Function::New(env, DeviceList));
   exports.Set(Napi::String::New(env, "Print"),
               Napi::Function::New(env, Print));
   exports.Set(Napi::String::New(env, "Disconnect"),
