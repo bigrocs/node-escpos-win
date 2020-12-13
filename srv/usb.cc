@@ -26,7 +26,9 @@ void GetDeviceList(list<DeviceInfo> &devicelist, string deviceType, ResultInfo &
     PSP_DEVICE_INTERFACE_DETAIL_DATA pDetail;
     SP_DEVICE_INTERFACE_DATA ifdata;
     GUID guid;
-    guid = GUID_DEVINTERFACE_USB_DEVICE; // 默认USB
+    if(deviceType == "USB"){
+        guid = GUID_DEVINTERFACE_USB_DEVICE; // 默认USB
+    }
     if(deviceType == "COM"){
         guid = GUID_DEVINTERFACE_COMPORT;
     }

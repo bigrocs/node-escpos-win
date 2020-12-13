@@ -10,7 +10,7 @@ Napi::Object DeviceList(const Napi::CallbackInfo &info)
   Napi::Object obj = Napi::Object::New(env); // 初始化函数返回数据对象
   if (info.Length() < 1)
   {
-    Napi::TypeError::New(env, "Wrong number of arguments, must be 2").ThrowAsJavaScriptException();
+    Napi::TypeError::New(env, "Wrong number of arguments, must be 1").ThrowAsJavaScriptException();
     return obj;
   }
 
@@ -93,7 +93,7 @@ Napi::Boolean Disconnect(const Napi::CallbackInfo &info)
   Napi::Env env = info.Env();
   if (info.Length() < 1)
   {
-    Napi::TypeError::New(env, "Wrong number of arguments, must be 2").ThrowAsJavaScriptException();
+    Napi::TypeError::New(env, "Wrong number of arguments, must be 1").ThrowAsJavaScriptException();
     return Napi::Boolean::New(env, false);
   }
 
