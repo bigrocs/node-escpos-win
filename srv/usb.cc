@@ -107,10 +107,10 @@ void GetDeviceList(list<DeviceInfo> &devicelist, string deviceType, ResultInfo &
             if (bResult)
             {
                 deviceinfo.path = pDetail->DevicePath;
+                nCount++; // 调整计数值
+                devicelist.push_back(deviceinfo);
             }
         }
-        nCount++; // 调整计数值
-        devicelist.push_back(deviceinfo);
     }
     resultInfo.success = true;
     ::GlobalFree(pDetail);                       // 释放设备接口数据空间
