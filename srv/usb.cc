@@ -35,13 +35,12 @@ void GetDeviceList(list<DeviceInfo> &devicelist, string deviceType, ResultInfo &
     if(deviceType == "LPT"){
         guid = GUID_DEVINTERFACE_PARCLASS;
     }
-     cout << "last err guid " << guid << endl;
     // 取得一个该GUID相关的设备信息集句柄
     hDevInfoSet = ::SetupDiGetClassDevs((LPGUID)&guid,  // class GUID USB
                                         NULL,                                   // 无关键字
                                         NULL,                                   // 不指定父窗口句柄
                                         DIGCF_PRESENT | DIGCF_DEVICEINTERFACE); // 目前存在的设备
-    cout << "last err hDevInfoSet " << hDevInfoSet << endl;
+
     // 获取设备信息失败
     if (hDevInfoSet == INVALID_HANDLE_VALUE)
     {
@@ -63,6 +62,7 @@ void GetDeviceList(list<DeviceInfo> &devicelist, string deviceType, ResultInfo &
         bResult = ::SetupDiEnumDeviceInfo(hDevInfoSet,     // 设备信息集句柄
                                           (ULONG)nCount,   // 设备信息集里的设备序号
                                           &spDevInfoData); // 设备接口信息
+       cout << "last err bResult " << bResult << endl;
         if (bResult)
         {
             DWORD DataT;
