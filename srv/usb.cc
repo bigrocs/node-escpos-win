@@ -70,12 +70,12 @@ void GetDeviceList(list<DeviceInfo> &devicelist, string deviceType, ResultInfo &
             DWORD nSize = 0;
             if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_DEVICEDESC, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
-                cout << "last err 4 " << buf << endl
+                cout << "last err 4 " << buf << endl;
                 deviceinfo.name = Utf8Encode(buf).c_str();
             }
             else if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_FRIENDLYNAME, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
             {
-                cout << "last err 5 " << buf << endl
+                cout << "last err 5 " << buf << endl;
                 deviceinfo.name = Utf8Encode(buf).c_str();
             }
             if (SetupDiGetDeviceRegistryProperty(hDevInfoSet, &spDevInfoData, SPDRP_SERVICE, &DataT, (PBYTE)buf, sizeof(buf), &nSize))
