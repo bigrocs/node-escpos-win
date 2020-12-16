@@ -11,6 +11,8 @@ var addon = require('../index.js');
         const content = iconv.encode("bigrocs!\n\n\n", 'GB18030');
         // console.log(1, printer); // 'world'
         // const res = addon.Print(lpt.list[0].path, content);
+        console.log(printer);
+        
         addon.asyncPrint(printer.path, content).then(r=>{
             console.log(r);
         }).catch(error => {
