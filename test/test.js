@@ -13,11 +13,12 @@ var addon = require('../index.js');
         // const res = addon.Print(lpt.list[0].path, content);
         console.log(printer);
         
-        addon.asyncPrint(printer.path, content).then(r=>{
-            console.log(r);
-        }).catch(error => {
-            reject(error)
-        })
+        addon.Print(printer.path, content)
+        // .then(r=>{
+        //     console.log(r);
+        // }).catch(error => {
+        //     reject(error)
+        // })
         // console.log(2, res); // 'world'
         // const isDisConnected = addon.Disconnect(printer.path);
         // console.log(3, isDisConnected); // 'world'
