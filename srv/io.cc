@@ -105,9 +105,8 @@ void InitializeDevicePar(PrintDevice &device)
 HANDLE InitPort(PrintDevice &device)
 {
     HANDLE handle = CreateFile(device.Port.c_str(), GENERIC_READ | GENERIC_WRITE,
-                               0, NULL,
-                               OPEN_EXISTING,
-                               FILE_FLAG_OVERLAPPED, NULL);
+                               NULL, NULL,
+                               OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
     if (handle == INVALID_HANDLE_VALUE)
     { // 打开端口失败
         return FALSE;
