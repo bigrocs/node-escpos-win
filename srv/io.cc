@@ -12,9 +12,10 @@ map<string, HandlerInfo> handlerMap;
 BOOL PrintRawDataByLpt(string devicePath, char*  meg, size_t size, PrintResult *result)
 {
 	DWORD dwWrite;
-	HANDLE hLPT = CreateFile(devicePath.c_str(), GENERIC_READ | GENERIC_WRITE, 0, NULL,
-		OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
-	if (hLPT == INVALID_HANDLE_VALUE) {
+    HANDLE hLPT = CreateFile(devicePath.c_str(), GENERIC_READ | GENERIC_WRITE,
+                             NULL, NULL,
+                             OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
+    if (hLPT == INVALID_HANDLE_VALUE) {
 		SetPrintResult(result, FALSE, GetLastError());
 		return FALSE;
 	}
@@ -103,10 +104,10 @@ void InitializeDevicePar(PrintDevice &device)
 
 HANDLE InitPort(PrintDevice &device)
 {
-    HANDLE handle = CreateFile(device.Port.c_str(), FILE_SHARE_READ|FILE_SHARE_WRITE,
+    HANDLE handle = CreateFile(device.Port.c_str(), GENERIC_READ | GENERIC_WRITE,
                                0, NULL,
                                OPEN_EXISTING,
-                               0, NULL);
+                               FILE_ATTRIBUTE_NORMAL, NULL);
     if (handle == INVALID_HANDLE_VALUE)
     { // 打开端口失败
         return FALSE;

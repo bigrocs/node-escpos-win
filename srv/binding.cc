@@ -84,8 +84,8 @@ Napi::Object Print(const Napi::CallbackInfo &info)
 	smatch r2;
   if (regex_match(devicePath, r2, reg1))
 	{
-		PrintRawDataByLpt(devicePath, bufData, bufferLength, printResult);
-	}
+    PrintRawData(devicePath, bufData, bufferLength, printResult);
+  }
 	else {
 		PrintRawData(devicePath, bufData, bufferLength, printResult);
 	}
