@@ -29,7 +29,7 @@ BOOL PrintRawDataByLpt(string devicePath, char*  meg, size_t size, PrintResult *
 		return FALSE;
 	}
 	FlushFileBuffers(hLPT);
-	// CloseHandle(hLPT);
+	CloseHandle(hLPT);
 	SetPrintResult(result, TRUE, NULL);
 	return TRUE;
 }
