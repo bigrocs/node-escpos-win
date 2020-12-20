@@ -89,8 +89,8 @@ Napi::Object Print(const Napi::CallbackInfo &info)
 	else {
 		PrintRawData(devicePath, bufData, bufferLength, printResult);
 	}
-  obj.Set(Napi::Boolean::New(env, "success"), printResult->success);
-  obj.Set(Napi::Number::New(env, "err"), printResult->err);
+  obj.Set(Napi::BOOL::New(env, "success"), printResult->success);
+  obj.Set(Napi::String::New(env, "err"), printResult->err);
   // 释放内存
   free(printResult);
   return obj;
