@@ -80,15 +80,15 @@ Napi::Object Print(const Napi::CallbackInfo &info)
   size_t bufferLength = data.Length();
   char *bufData = data.Data();
   PrintResult *printResult = (PrintResult *)malloc(sizeof(PrintResult));
-  // regex reg1("^LPT\\d+");
-	// smatch r2;
-  // if (regex_match(devicePath, r2, reg1))
-	// {
-	// 	PrintRawDataByLpt(devicePath, bufData, bufferLength, printResult);
-	// }
-	// else {
+  regex reg1("^LPT\\d+");
+	smatch r2;
+  if (regex_match(devicePath, r2, reg1))
+	{
+		PrintRawDataByLpt(devicePath, bufData, bufferLength, printResult);
+	}
+	else {
 		PrintRawData(devicePath, bufData, bufferLength, printResult);
-	// }
+	}
   obj.Set(Napi::String::New(env, "success"), printResult->success);
   obj.Set(Napi::String::New(env, "err"), printResult->err);
   // 释放内存
