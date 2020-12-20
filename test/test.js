@@ -11,7 +11,7 @@ var addon = require('../index.js');
         const content = iconv.encode("bigrocs!\n\n\n", 'GB18030');
         // console.log(1, printer); // 'world'
         const res = addon.Print(lpt.list[0].path, content);
-        console.log(printer);
+        console.log(printer, res);
         
         // console.log(2, res); // 'world'
         // const isDisConnected = addon.Disconnect(printer.path);
