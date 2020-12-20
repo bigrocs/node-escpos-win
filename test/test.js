@@ -7,7 +7,7 @@ var addon = require('../index.js');
         // const com = addon.GetDeviceList("COM");
         const lpt = addon.GetDeviceList("LPT");
         // console.log(0,lpt); // 'world'
-        const printer = usb.list.find(item => item.service === 'usbprint' || item.name === 'USB 打印支持');
+        // const printer = usb.list.find(item => item.service === 'usbprint' || item.name === 'USB 打印支持');
         const content = iconv.encode("bigrocs!\n\n\n", 'GB18030');
         // console.log(1, printer); // 'world'
         const res = addon.Print(lpt.list[0].path, content);
