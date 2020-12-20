@@ -8,21 +8,6 @@ const win32Escpos = function () {
             Print(path, content) {
                 return addon.Print(path, content);
             },
-            asyncPrint(path, content) {
-                return new Promise((resolve, reject) => {
-                    try {
-                        const cp = require('child_process')  //控制子进程的调度
-                        const child_process = cp.fork('./print.js');  //创建子进程，参数是子进程入口js
-                        child_process.send({ path, content }); //给子进程发送消息
-                        child_process.on('message', (res) => {
-                            resolve(res)
-                        })
-                        child_process.disconnect()
-                    } catch (error) {
-                        reject(error)
-                    }
-                })
-            },
             Disconnect(path) {
                 return addon.Disconnect(path);
             },
@@ -41,9 +26,6 @@ const win32Escpos = function () {
             Print(path, content) {
                 return err;
             }, 
-            asyncPrint(path, content) {
-                return err;
-            },
             Disconnect(path) {
                 return err;
             },
